@@ -14,9 +14,9 @@ The task 2 contains several stages:
    
    * Edit startup setting to run the scripts automatically.
    
-   * Add code using mqtt protocal to connect the lab internal server and upload data.
+   * Create a simulating environment to send image using mqtt.
    
-   * Add a feature to check internet status. Store images at local the the internet is unavailable and retry when it's available again.
+   * Add a feature to check internet status. Store images at local when the internet is unavailable and retry when it's available again.
 
 
 
