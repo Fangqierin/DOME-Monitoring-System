@@ -22,10 +22,19 @@ The task 2 contains several stages:
 
 This folder contains the code running on the testing raspberry pi. The file location maybe different on other machines.
 
-**startup.py**
+**startup_script**
 
-> The script runs automatically when the machine is turned on.
+> The scripts in this folder run automatically when the machine is turned on.
 
+**code_prototype**
+
+> The scripts in this folder serves as a rough unit test for the function that will be used in real scripts.
+> * camera_startup.py
+> 
+>   Automatically start taking photos and saving to local storage by setting interval.
+> * upload_startup.py
+> 
+>   Automatically start checking existed data and network condition. Upload data to server.
 ### 
 
 
