@@ -62,8 +62,34 @@ Add a new line to call the script
 
 Must contain a *&* if the script won't end automatically.
 
+**MQTT doesn't work when sending large file**
+
+Use chunks. we changed to zeroMQ for image transfer.
 
 
+**Add networks and switch between them**
+
+Edit `/etc/wpa_supplicant/wpa_supplicant.conf` and set different priority to each netwsudo
+
+Example:
+```
+network={
+    ssid="SCHOOLS NETWORK NAME"
+    psk="SCHOOLS PASSWORD"
+    priority=1
+}
+```
+
+Larger priority is accessed 1st.
+
+Use
+`wpa_cli -i wlan0 select_network 0` to switch to the 1st.
+
+PS: after call the command, until reboot or manually cancelled using `wpa_cli -i wlan0 enable_network all`, other networks will be disabled.
+
+Access the router to find the ipaddress of raspberry pi, then ssh to it using ip address instead of hostname.
+
+Why not use hostname: when connecting to a new network, need to edit the config on the router side, it would be more convenient to use a phone of laptop to find the ip address.
 
 
 

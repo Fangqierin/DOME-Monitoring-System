@@ -1,5 +1,3 @@
-import os
-
 import paho.mqtt.client as paho
 from paho import mqtt
 from config import username, password, broker_address
@@ -17,6 +15,7 @@ def on_subscribe(client, userdata, mid, granted_qos, properties=None):
 
 # Dictionary to store the received chunks
 chunks = {}
+CHUNK_SIZE = 1024
 
 
 # print message, useful for checking if it was successful
@@ -33,8 +32,8 @@ def on_message(client, userdata, msg):
         if msg.payload == b"EOF":
             save_path = "received_" + image_name
             with open(save_path, "wb") as f:
-                for i in range(len(chunks[image_name])):
-                    f.write(chunks[image_name][i])
+                for seq_num in sorted(chunks[image_name]):
+                    f.write(chunks[image_name][seq_num])
             print(f"Received all the chunks of the image {image_name} (seq_num={seq_num})")
             chunks[image_name].clear()  # Clear the dictionary
         else:
