@@ -54,7 +54,7 @@ It might because the monitor isn't compatible with the monitor. Try [this soluti
 
 **Startup script**
 
-Edit /etc/rc.local
+Edit `/etc/rc.local`
 
 Add a new line to call the script
 
@@ -87,10 +87,7 @@ Use
 
 PS: after call the command, until reboot or manually cancelled using `wpa_cli -i wlan0 enable_network all`, other networks will be disabled.
 
-Access the router to find the ipaddress of raspberry pi, then ssh to it using ip address instead of hostname.
-
-Why not use hostname: when connecting to a new network, need to edit the config on the router side, it would be more convenient to use a phone of laptop to find the ip address.
-
+If can't access using hostname, access the router to find the ipaddress of raspberry pi, then ssh to it using ip address instead of hostname.
 
 
 
