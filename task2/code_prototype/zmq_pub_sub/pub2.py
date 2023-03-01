@@ -3,7 +3,6 @@ from config import *
 import zmq
 import os
 import time
-import subprocess
 
 context = zmq.Context()
 
@@ -14,26 +13,7 @@ socket.connect(f"tcp://{ZMQ_HOST}:{ZMQ_PORT}")
 # set the topic for this publisher
 topic = ZMQ_TOPICS[1]
 
-def conn_check() -> bool:
-    # Run the command to get the SSID of the currently connected network
-    result = subprocess.run(['iwgetid', '-r'], capture_output=True, text=True)
-
-    # Extract the SSID from the output
-    ssid = result.stdout.strip()
-
-    # Check if the SSID is empty
-    if not ssid:
-        print("Not currently connected to a WiFi network")
-        return False
-    else:
-        print(f"Currently connected to WIFI with ssid: {ssid}")
-        return ssid == wifi_name
-
 while True:
-    if not conn_check():
-        time.sleep(RETRY_INTERVAL_SEC)
-        continue
-
     # scan the folder and upload all files with the given topic
     for filename in os.listdir(folder_path[1]):
         filepath = os.path.join(folder_path[1], filename)

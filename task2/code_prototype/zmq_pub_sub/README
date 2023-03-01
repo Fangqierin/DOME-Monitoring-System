@@ -1,0 +1,19 @@
+Example config file:
+```
+# MongoDB Configuration
+MONGO_HOST = '127.0.0.1'
+MONGO_PORT = 27017
+MONGO_DB_NAME = 'dome'
+
+# ZeroMQ Configuration
+ZMQ_HOST = '192.168.0.101'
+ZMQ_PORT = '5554'
+ZMQ_TOPICS = ["task1_events", "task2_images", "task3_windparams"]
+
+# Client folder name
+folder_path = ['./input_folder', './input_folder_2', './input_folder_3']
+
+SCAN_INTERVAL_SEC = 10
+RETRY_INTERVAL_SEC = 20
+
+```

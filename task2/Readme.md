@@ -37,13 +37,23 @@ This folder contains the code running on the testing raspberry pi. The file loca
 > The scripts in this folder serves as a rough unit test for the function that will be used in real scripts.
 
 
+### How to apply it to other project
+Run `code_prototype/zmq_pub_sub/sub.py` to host a subscriber locally.
+
+Run `startup_script/upload_startup.py` to host a publisher on your device.
+
+The publisher will check connection, scan the folder to upload files.
+
+The subscriber will save the data to mongodb
+
+To simulate multiple publisher, you can run files in zmq_pub_sub at the same time.
+
 
 ### Common problems
 
 **Black screen when set up the raspberrypi**
 
 It might because the monitor isn't compatible with the monitor. Try [this solution](https://raspberrypi.stackexchange.com/questions/7009/will-not-boot-black-screen-only).
-
 
 
 **Camera commands**
@@ -90,7 +100,8 @@ PS: after call the command, until reboot or manually cancelled using `wpa_cli -i
 If can't access using hostname, access the router to find the ipaddress of raspberry pi, then ssh to it using ip address instead of hostname.
 
 
-
+*Find mongodb ip*
+use db.runCommand({whatsmyuri: 1}) after selecting a database in mongosh
 
 
 
