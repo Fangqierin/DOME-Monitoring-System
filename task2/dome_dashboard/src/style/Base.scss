@@ -1,0 +1,17 @@
+$background-light: #dfe6e9;
+$background-dark: #b2bec3;
+
+$cell_on_fire: #ff3838;
+$cell_off_fire: aliceblue;
+
+
+@mixin flex_div($dir: row, $wrap: wrap) {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: $dir;
+  flex-wrap: $wrap;
+
+  align-items: center;
+  justify-content: center;
+}
+

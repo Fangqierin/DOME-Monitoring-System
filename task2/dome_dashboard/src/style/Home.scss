@@ -1,0 +1,75 @@
+@use 'Base';
+
+.home{
+  &-title{
+    padding: 0.4em;
+  }
+}
+
+.chart-area{
+  @include Base.flex_div();
+
+  &__module{
+    @include Base.flex_div(column);
+
+    width: calc(50% - 2em);
+    min-width: 480px;
+    margin: 1em;
+    border-radius: 4px;
+
+    background: white;
+    box-shadow: 0 0 10px 5px rgba(0,0,0,0.2);
+
+    &__title{
+      box-sizing: border-box;
+      align-self: start;
+      padding: 0.2em;
+      border-radius: 4px;
+      font-size: 1.4em;
+      margin: 0.4em;
+    }
+
+    &__chart{
+      position: relative;
+      height: 36vh;
+      min-height: 12em;
+      width: 80%;
+    }
+
+    &__link{
+      display: block;
+      align-self: end;
+      margin: 0.4em;
+
+      color: black;
+    }
+  }
+}
+
+.grid-chart{
+  @include Base.flex_div(column);
+
+  &__row{
+    @include Base.flex_div(row);
+  }
+
+  &__cell{
+    box-sizing: border-box;
+    width: 2.4em;
+    height: 2.4em;
+    line-height: 2.4em;
+    border: 1px solid #576574;
+
+    &--on{
+      background: Base.$cell_on_fire;
+    }
+
+    &--off{
+      background: Base.$cell_off_fire;
+    }
+  }
+}
+
+.live-preview{
+  height: 36vh;
+}
