@@ -1,0 +1,38 @@
+@use "Base";
+
+.chart-area{
+  @include Base.flex_div();
+
+  &__module{
+    @include Base.flex_div(column);
+
+    flex:1;
+    min-width: 360px;
+    margin: 1em;
+    border-radius: 4px;
+
+    background: white;
+    box-shadow: 0 0 10px 5px rgba(0,0,0,0.2);
+
+    &:hover{
+        box-shadow: 0 0 10px 5px rgba(0,0,0,0.4);
+        cursor: pointer;
+    }
+
+    &__title{
+      box-sizing: border-box;
+      align-self: start;
+      padding: 0.2em;
+      border-radius: 4px;
+      font-size: 1.4em;
+      margin: 0.4em;
+    }
+
+    &__chart{
+      position: relative;
+      height: 36vh;
+      min-height: 12em;
+      width: 80%;
+    }
+  }
+}

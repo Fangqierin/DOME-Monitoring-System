@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from "./pages/Home";
 
 import './style/App.scss';
-import DetailedChart from './pages/DetailedChart';
+import DetailedTable from './pages/DetailedTable';
 
 
 const App = () =>
@@ -12,7 +12,7 @@ const App = () =>
         <Router>
             <Routes>
                 <Route path="/" element={<Home/>} />
-                <Route path="/chart/:name" element={<DetailedChart/>} />
+                <Route path="/chart/:name" element={<DetailedTable/>} />
             </Routes>
         </Router>
     </div>

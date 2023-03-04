@@ -1,0 +1,11 @@
+@use "Base";
+
+.live-preview{
+  @include Base.flex_div();
+
+  &__img{
+    height: 16em;
+    flex: 1;
+    margin: 1em;
+  }
+}

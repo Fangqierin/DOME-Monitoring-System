@@ -24,7 +24,7 @@ ChartJS.register(
 const line_chart_reformat_data = (json_data, x_param, y_param_list) => {
     const datasets = []
 
-    for (let y_param in y_param_list) {
+    for (let y_param of y_param_list) {
         datasets.push({
             label: y_param,
             data: json_data.map(entry => entry[y_param]),

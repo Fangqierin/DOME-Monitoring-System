@@ -1,0 +1,72 @@
+@use "Base";
+
+.grid-area{
+  @include Base.flex_div();
+
+  position: relative;
+  height: 16em;
+
+  &__table{
+    display: block;
+    height: 100%;
+    width: auto !important;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    margin: 0 auto!important;
+
+    /* Width and color of the scrollbar */
+    &::-webkit-scrollbar {
+      width: 10px;
+      background-color: #f5f5f5;
+    }
+
+    /* Handle of the scrollbar */
+    &::-webkit-scrollbar-thumb {
+      background-color: #888;
+      border-radius: 5px;
+    }
+
+    /* Hover styles for the scrollbar */
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: #555;
+    }
+
+    /* Corner of the scrollbar */
+    &::-webkit-scrollbar-corner {
+      background-color: #f5f5f5;
+    }
+
+    th, td{
+      padding: 0.4em 2em !important;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+  }
+
+  &__chart{
+    @include Base.flex_div(column);
+
+    margin: 0 auto!important;
+
+    &__row{
+      @include Base.flex_div(row);
+    }
+
+    &__cell{
+      box-sizing: border-box;
+      width: 2.4em;
+      height: 2.4em;
+      line-height: 2.4em;
+      border: 1px solid #576574;
+
+      &--on{
+        background: Base.$cell_on_fire;
+      }
+
+      &--off{
+        background: Base.$cell_off_fire;
+      }
+    }
+  }
+}

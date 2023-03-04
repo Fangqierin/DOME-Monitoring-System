@@ -4,7 +4,7 @@ import fake_data from '../util/fake_data';
 
 import '../style/Table.scss';
 
-const DetailedChart = () =>{
+const DetailedTable = () =>{
     const { name } = useParams();
 
     const data = fake_data[name];
@@ -39,4 +39,4 @@ const DetailedChart = () =>{
 }
 
 
-export default DetailedChart;
+export default DetailedTable;

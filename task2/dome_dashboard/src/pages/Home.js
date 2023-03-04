@@ -1,24 +1,23 @@
 import React from "react";
 
-import ChartModule from "./components/ChartModule";
-import AirQualityChart from "./components/AirQualityChart";
-import WeatherParamChart from "./components/WeatherParamChart";
-import GridChart from './components/GridChart';
+import FireGrids from './components/FireGrids';
 import LivePreview from './components/LivePreview';
+import ChartArea from './components/charts/ChartArea';
 
-import "../style/Home.scss"
+import "../style/Home.scss";
+import "../style/LivePreview.scss";
+import "../style/Grid.scss";
+import "../style/Chart.scss";
 
 const Home = () => {
     return (
         <div className='home'>
             <h1 className='home-title'>Dome Dashboard</h1>
 
-            <div className='chart-area'>
-                <ChartModule chart={<AirQualityChart/>} title='Air Quality' detail_link='/chart/air_qualities'/>
-                <ChartModule chart={<WeatherParamChart/>} title='Weather Parameters' detail_link='/chart/weather_params'/>
-                <ChartModule chart={<GridChart/>} title='Fire Grid' detail_link='/chart/grids'/>
-                <ChartModule chart={<LivePreview/>} title='Live Preview' detail_link='/chart/live_preview'/>
-            </div>
+            <LivePreview/>
+            <FireGrids/>
+
+            <ChartArea/>
         </div>
     );
 }
