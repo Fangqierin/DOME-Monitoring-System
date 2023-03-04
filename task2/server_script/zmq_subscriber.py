@@ -1,5 +1,6 @@
 from config import *
 
+import os
 import zmq
 import pymongo
 
@@ -9,6 +10,9 @@ context = zmq.Context()
 socket = context.socket(zmq.SUB)
 socket.bind(f"tcp://*:{ZMQ_PORT}")
 socket.setsockopt_string(zmq.SUBSCRIBE, "")  # filter here
+
+if not os.path.exists(IMAGE_DIR):
+    os.makedirs(IMAGE_DIR)
 
 # connect to MongoDB
 client = pymongo.MongoClient(MONGO_HOST, MONGO_PORT)
@@ -20,7 +24,15 @@ while True:
     topic = topic.decode()
     filename = filename.decode()
 
-    if topic in ZMQ_TOPICS:
+    if topic == "images":
+        # save the image locally in the IMAGE_DIR
+        filepath = os.path.join(IMAGE_DIR, filename)
+        with open(filepath, 'wb') as f:
+            f.write(data)
+        # insert the file path into the corresponding collection in MongoDB
+        collection = db[topic]
+        collection.insert_one({"filename": filename, "filepath": filepath})
+    else:
         # insert the data into the corresponding collection in MongoDB
         collection = db[topic]
         collection.insert_one({"filename": filename, "data": data})

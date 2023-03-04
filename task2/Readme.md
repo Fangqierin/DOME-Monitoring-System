@@ -22,7 +22,7 @@ The task 2 contains several stages:
 
 This folder contains the code running on the testing raspberry pi. The file location maybe different on other machines.
 
-**startup_script**
+**client_script**
 
 > The scripts in this folder run automatically when the machine is turned on.
 > * camera_startup.py
@@ -30,11 +30,21 @@ This folder contains the code running on the testing raspberry pi. The file loca
 >   Automatically start taking photos and saving to local storage by setting interval.
 > * upload_startup.py
 > 
->   Automatically start checking existed data and network condition. Upload data to server.
+>   Automatically start checking existed data and network condition. Publish data to the port using zmq.
+> 
+> * zmq_publisher.py
+> 
+>   Publish to the port.
 
-**code_prototype**
+**server_script**
 
-> The scripts in this folder serves as a rough unit test for the function that will be used in real scripts.
+> The scripts in this folder runs on the server side.
+> * zmq_subscriber.py
+> 
+>   Subscribe to the port, handle incoming data and save them to local mongodb. (Images will be saved to local storage and only file path will be saved to mongodb)
+> * db_handler.py
+> 
+>   Provide APIs to query data from mongodb.
 
 
 ### How to apply it to other project
