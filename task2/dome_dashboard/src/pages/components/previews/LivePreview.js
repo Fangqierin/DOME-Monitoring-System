@@ -7,20 +7,26 @@ const LivePreview = () => {
     const [file_names, set_file_names] = React.useState([]);
 
     useEffect(() => {
-        setInterval(() => {
-            if(using_fake_data){
-                set_file_names(['preview1.jpg', 'preview2.jpg', 'preview3.jpg']);
-                return;
+        const update_previews = async () => {
+            try {
+                if (using_fake_data) {
+                    set_file_names(['preview1.jpg', 'preview2.jpg', 'preview3.jpg']);
+                    return;
+                }
+
+                const response = await fetch(apis.get_data + "?collection_name=images");
+                const data = await response.json();
+
+                set_file_names(data.result.map(item => item.filename));
+            } catch (error) {
+                console.error(error);
             }
+        };
 
-            fetch(apis.get_data + "?collection_name=images")
-                .then(res => res.json())
-                .then(data => {
-                    set_file_names(data.result.map(item => item.filename));
-                })
+        update_previews().then(() => console.log('Initialized previews.'));
 
-            return () => clearInterval();
-        }, 10000)
+        const intervalId = setInterval(update_previews, 10000);
+        return () => clearInterval(intervalId);
     }, []);
 
     return (

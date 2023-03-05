@@ -8,20 +8,26 @@ const FireGrids = () => {
     const [grids, set_grids] = React.useState(undefined);
 
     useEffect(() => {
-        setInterval(() => {
-            if(using_fake_data){
-                set_grids(fake_data.grids);
-                return;
+        const update_grids = async () => {
+            try {
+                let response;
+                if (using_fake_data) {
+                    response = fake_data.grids;
+                } else {
+                    response = await fetch(apis.get_grids);
+                    response = await response.json();
+                    response = JSON.parse(response.result.grids);
+                }
+                set_grids(response);
+            } catch (err) {
+                console.error(err);
             }
+        };
 
-            fetch(apis.get_grids)
-                .then(res => res.json())
-                .then(data => {
-                    set_grids(JSON.parse(data.result.grids));
-                })
+        update_grids().then(() => console.log('Initialized grids.'));
 
-            return () => clearInterval();
-        }, 10000)
+        const intervalId = setInterval(update_grids, 10000);
+        return () => clearInterval(intervalId);
     }, []);
 
     if(!grids) return (<></>);

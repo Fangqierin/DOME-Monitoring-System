@@ -12,30 +12,33 @@ const ChartArea = () =>{
     });
 
     useEffect(() => {
-        setInterval(async () => {
-            if(using_fake_data)
-            {
-                set_data_param({
-                    air_qualities: fake_data.air_qualities,
-                    weather_params: fake_data.weather_params
-                })
+        const update_data = async () => {
+            try {
+                let new_data_param = {};
+                if (using_fake_data) {
+                    new_data_param = {
+                        air_qualities: fake_data.air_qualities,
+                        weather_params: fake_data.weather_params,
+                    };
+                } else {
+                    let res = await fetch(`${apis.get_data}?collection_name=weather`);
+                    let data = await res.json();
+                    new_data_param.weather_params = data.result;
 
-                return;
+                    res = await fetch(`${apis.get_data}?collection_name=air`);
+                    data = await res.json();
+                    new_data_param.air_qualities = data.result;
+                }
+                set_data_param(new_data_param);
+            } catch (err) {
+                console.error(err);
             }
+        };
 
-            const new_data_param = {};
+        update_data().then(() => console.log('Initialized charts.'));
 
-            let res = await fetch(apis.get_data + "?collection_name=weather")
-            let data = await res.json();
-            new_data_param.weather_params = data.result;
-
-            res = await fetch(apis.get_data + "?collection_name=air")
-            data = await res.json();
-            new_data_param.air_qualities = data.result.air_qualities;
-            set_data_param(new_data_param);
-
-            return () => clearInterval();
-        }, 10000)
+        const intervalId = setInterval(update_data, 10000);
+        return () => clearInterval(intervalId);
     }, []);
 
     return (
