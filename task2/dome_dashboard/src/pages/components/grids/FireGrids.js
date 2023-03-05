@@ -19,6 +19,8 @@ const FireGrids = () => {
                     response = JSON.parse(response.result.grids);
                 }
                 set_grids(response);
+
+                console.log('Updated grids');
             } catch (err) {
                 console.error(err);
             }

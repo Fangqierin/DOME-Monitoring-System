@@ -18,6 +18,8 @@ const LivePreview = () => {
                 const data = await response.json();
 
                 set_file_names(data.result.map(item => item.filename));
+
+                console.log('Updated previews');
             } catch (error) {
                 console.error(error);
             }

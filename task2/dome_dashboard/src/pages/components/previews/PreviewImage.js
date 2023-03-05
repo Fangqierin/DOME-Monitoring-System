@@ -12,13 +12,12 @@ const PreviewImage = ({ filename }) =>{
             setImageUrl(url);
         };
 
-        getImage().then(r => console.log(r));
+        getImage().then(r => console.log(filename + ' loaded.'));
     }, [filename]);
 
     return (
         imageUrl && <img className='live-preview__img' src={ imageUrl } alt='Preview unavailable'/>
     );
 }
-    // <img className='live-preview__img' src={filename} alt='Live preview unavailable'/>
 
 export default PreviewImage;

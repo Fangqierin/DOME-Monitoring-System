@@ -8,6 +8,7 @@ import "../style/Home.scss";
 import "../style/LivePreview.scss";
 import "../style/Grid.scss";
 import "../style/Chart.scss";
+import FlightPath from './components/flight_path/FlightPath';
 
 const Home = () => {
     return (
@@ -16,6 +17,7 @@ const Home = () => {
 
             <LivePreview/>
             <FireGrids/>
+            <FlightPath/>
 
             <ChartArea/>
         </div>

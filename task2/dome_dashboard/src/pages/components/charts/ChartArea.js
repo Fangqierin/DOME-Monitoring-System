@@ -17,8 +17,8 @@ const ChartArea = () =>{
                 let new_data_param = {};
                 if (using_fake_data) {
                     new_data_param = {
-                        air_qualities: fake_data.air_qualities,
-                        weather_params: fake_data.weather_params,
+                        air_qualities: fake_data.air,
+                        weather_params: fake_data.weather,
                     };
                 } else {
                     let res = await fetch(`${apis.get_data}?collection_name=weather`);
@@ -30,6 +30,8 @@ const ChartArea = () =>{
                     new_data_param.air_qualities = data.result;
                 }
                 set_data_param(new_data_param);
+
+                console.log('Updated charts');
             } catch (err) {
                 console.error(err);
             }

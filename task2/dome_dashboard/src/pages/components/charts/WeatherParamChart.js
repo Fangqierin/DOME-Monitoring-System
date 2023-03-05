@@ -6,7 +6,7 @@ import ChartModule from './ChartModule';
 
 const WeatherParamChart = ({weather_params}) =>
     weather_params &&
-        <div className='chart-area' onClick={() => window.open('/chart/weather_params', '_blank')}>
+        <div className='chart-area' onClick={() => window.open('/chart/weather', '_blank')}>
             <ChartModule chart={
                 <Line data={line_chart_reformat_data(weather_params, "time_stamp", ["temperature"])} />
             } title='Temperature'/>

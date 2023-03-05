@@ -5,7 +5,7 @@ import ChartModule from './ChartModule';
 
 const AirQualityChart = ({air_qualities}) =>
     air_qualities &&
-        <div className='chart-area' onClick={() => window.open('/chart/air_qualities', '_blank')}>
+        <div className='chart-area' onClick={() => window.open('/chart/air', '_blank')}>
             <ChartModule chart={
                 <Line data={line_chart_reformat_data(air_qualities, "time_stamp", ["pm_2_5"])} />
             } title='PM 2.5'/>

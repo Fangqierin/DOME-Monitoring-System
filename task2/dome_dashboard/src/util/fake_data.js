@@ -1,5 +1,5 @@
 const fake_data = {
-    air_qualities: [
+    air: [
         {
             device_id: 22,
             time_stamp: '10:23:22',
@@ -19,7 +19,7 @@ const fake_data = {
             pm_10: 20
         }
     ],
-    weather_params: [
+    weather: [
         {
             device_id: 33,
             time_stamp: '10:23:22',
