@@ -16,4 +16,8 @@ The project contains three tasks.
 
 Find code and usages in subdirectories.
 
-![](https://raw.githubusercontent.com/Sothis-baka/CS-295-DOME/cyl-task2-dev/task2/dash_board_preview.jpg)
+![](https://github.com/Sothis-baka/CS-295-DOME/blob/cyl-task2-dev/task2/preview1.jpg?raw)
+
+![](https://github.com/Sothis-baka/CS-295-DOME/blob/cyl-task2-dev/task2/preview2.jpg?raw)
+
+![](https://github.com/Sothis-baka/CS-295-DOME/blob/cyl-task2-dev/task2/preview3.jpg?raw)

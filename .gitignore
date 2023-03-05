@@ -1,5 +1,3 @@
 .idea
 **/config.py
 **/*.jpg
-
-!task2/dash_board_preview.jpg
