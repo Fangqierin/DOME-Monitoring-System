@@ -1,7 +1,7 @@
 import React from "react";
 
-import FireGrids from './components/FireGrids';
-import LivePreview from './components/LivePreview';
+import FireGrids from './components/grids/FireGrids';
+import LivePreview from './components/previews/LivePreview';
 import ChartArea from './components/charts/ChartArea';
 
 import "../style/Home.scss";

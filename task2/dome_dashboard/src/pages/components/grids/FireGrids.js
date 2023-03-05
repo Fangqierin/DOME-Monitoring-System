@@ -1,15 +1,38 @@
-import fake_data from '../../util/fake_data'
+import fake_data from '../../../util/fake_data'
 import classNames from 'classnames';
-import React from 'react';
+import React, {useEffect} from 'react';
+import {using_fake_data} from '../../../util/config';
+import apis from '../../../util/apis';
 
-const FireGrids = () =>{
+const FireGrids = () => {
+    const [grids, set_grids] = React.useState(undefined);
+
+    useEffect(() => {
+        setInterval(() => {
+            if(using_fake_data){
+                set_grids(fake_data.grids);
+                return;
+            }
+
+            fetch(apis.get_grids)
+                .then(res => res.json())
+                .then(data => {
+                    set_grids(JSON.parse(data.result.grids));
+                })
+
+            return () => clearInterval();
+        }, 10000)
+    }, []);
+
+    if(!grids) return (<></>);
+
     return(
         <>
             <h2 className="home-subtitle">Fire Grids</h2>
             <div className='grid-area'>
                 <div className="grid-area__chart">
                     {
-                        fake_data.grids.map((row, i) =>
+                        grids.map((row, i) =>
                             <div className="grid-area__chart__row" key={`grid_row_${i}`}>
                                 {
                                     row.map((g, j) =>
@@ -34,7 +57,7 @@ const FireGrids = () =>{
 
                     <tbody>
                     {
-                        fake_data.grids.map((row, i) =>
+                        grids.map((row, i) =>
                             row.map((g, j) =>
                                 <tr key={`grid_row_${i}_${j}`}>
                                     <td>{`(${i}, ${j})`}</td>

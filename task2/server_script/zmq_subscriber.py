@@ -31,7 +31,7 @@ while True:
             f.write(data)
         # insert the file path into the corresponding collection in MongoDB
         collection = db[topic]
-        collection.insert_one({"filename": filename, "filepath": filepath})
+        collection.insert_one({"filename": filename})
     else:
         # insert the data into the corresponding collection in MongoDB
         collection = db[topic]

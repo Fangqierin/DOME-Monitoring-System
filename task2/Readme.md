@@ -1,26 +1,10 @@
 # Task 2: Explore store-and-upload data transmission
 
-### Description
-
-The task 2 contains several stages:
-
-1. Week 1
-   
-   * Set up env and camera accessory. 
-   
-   * Take photos using command line and python script.
-
-2. Week 2
-   
-   * Edit startup setting to run the scripts automatically.
-   
-   * Create a simulating environment to send image using mqtt.
-   
-   * Add a feature to check internet status. Store images at local when the internet is unavailable and retry when it's available again.
-
-
+## Description
 
 This folder contains the code running on the testing raspberry pi. The file location maybe different on other machines.
+
+Find details task descriptions [here](https://trello.com/c/9CVeJohe/18-task2-week4).
 
 **client_script**
 
@@ -47,32 +31,40 @@ This folder contains the code running on the testing raspberry pi. The file loca
 >   Provide APIs to query data from mongodb.
 
 
-### How to apply it to other project
-Run `code_prototype/zmq_pub_sub/sub.py` to host a subscriber locally.
+## Usage
 
-Run `startup_script/upload_startup.py` to host a publisher on your device.
+
+### How to host dashboard in local network
+Run `server_script/db_handler.py` to host the api server.
+
+Host web client following Readme in `dome_dashboard` folder.
+
+
+### How to transfer data using zmq in other project
+Run `server_script/zmq_subscriber.py` to host a subscriber locally.
+
+Run `client_script/upload_startup.py` to host a publisher on your raspberrypi or zmq_publisher.py on a non-linux device.
 
 The publisher will check connection, scan the folder to upload files.
 
 The subscriber will save the data to mongodb
 
-To simulate multiple publisher, you can run files in zmq_pub_sub at the same time.
+Configuration file example can be found in README at that folder
 
+## Common problems
 
-### Common problems
-
-**Black screen when set up the raspberrypi**
+**Black screen when setting up the raspberrypi**
 
 It might because the monitor isn't compatible with the monitor. Try [this solution](https://raspberrypi.stackexchange.com/questions/7009/will-not-boot-black-screen-only).
 
 
-**Camera commands**
+**Raspberry pi camera commands**
 
 [Tutorial](https://projects.raspberrypi.org/en/projects/getting-started-with-picamera/0)
 
 
 
-**Startup script**
+**Set Raspberry pi startup script**
 
 Edit `/etc/rc.local`
 

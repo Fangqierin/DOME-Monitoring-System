@@ -15,9 +15,9 @@ topic = ZMQ_TOPIC
 
 while True:
     # scan the folder and upload all files with the given topic
-    for filename in os.listdir(folder_path[0]):
+    for filename in os.listdir(folder_path):
         if filename.endswith(file_ends):
-            filepath = os.path.join(folder_path[0], filename)
+            filepath = os.path.join(folder_path, filename)
             with open(filepath, "rb") as f:
                 data = f.read()
 
