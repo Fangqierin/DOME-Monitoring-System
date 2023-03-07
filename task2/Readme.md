@@ -70,6 +70,8 @@ Edit `/etc/rc.local`
 
 Add a new line to call the script
 
+**Note** The file runs as root, you need to install the packages as root using sudo.
+
 ```sudo python /home/pi/sample.py &```
 
 Must contain a *&* if the script won't end automatically.
