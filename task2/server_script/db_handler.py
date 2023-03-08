@@ -43,5 +43,30 @@ def get_grids():
         return jsonify({'error': str(e)})
 
 
+@app.route('/waypoint', methods=['GET'])
+def get_unread_waypoints():
+    try:
+        collection = mongo.db['way_points']
+        documents = collection.find({"read": "0"})
+        return jsonify(list(documents))
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+
+@app.route('/waypoint', methods=['POST'])
+def add_waypoint():
+    try:
+        collection = mongo.db['way_points']
+        data = request.json
+        collection.insert_one({
+            'x': data['x'],
+            'y': data['y'],
+            'z': data['z'],
+            'read': data['read']
+        })
+        return jsonify({'message': 'Waypoint added successfully'})
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
