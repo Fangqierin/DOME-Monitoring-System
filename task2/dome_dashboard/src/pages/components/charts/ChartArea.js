@@ -2,7 +2,7 @@ import AirQualityChart from './AirQualityChart';
 import WeatherParamChart from './WeatherParamChart';
 import React, {useEffect} from 'react';
 import apis from '../../../util/apis';
-import {using_fake_data} from '../../../util/config';
+import {update_interval, using_fake_data} from '../../../util/config';
 import fake_data from '../../../util/fake_data';
 
 const ChartArea = () =>{
@@ -44,7 +44,6 @@ const ChartArea = () =>{
                             return (aH - bH) || (aM - bM) || (as - bs)
                         }
                     );
-                    console.log(new_data_param)
                 }
                 set_data_param(new_data_param);
 
@@ -56,7 +55,7 @@ const ChartArea = () =>{
 
         update_data().then(() => console.log('Initialized charts.'));
 
-        const intervalId = setInterval(update_data, 5000);
+        const intervalId = setInterval(update_data, update_interval);
         return () => clearInterval(intervalId);
     }, []);
 

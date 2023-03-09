@@ -5,7 +5,7 @@ import PreviewImage from './PreviewImage';
 import preview1 from '../../sources/preview1.jpg';
 import preview2 from '../../sources/preview2.jpg';
 import preview3 from '../../sources/preview3.jpg';
-import {using_fake_data} from '../../../util/config';
+import {update_interval, using_fake_data} from '../../../util/config';
 
 const LivePreview = () => {
     const [file_names, set_file_names] = React.useState([]);
@@ -31,7 +31,7 @@ const LivePreview = () => {
 
         update_previews().then(() => console.log('Initialized previews.'));
 
-        const intervalId = setInterval(update_previews, 10000);
+        const intervalId = setInterval(update_previews, update_interval);
         return () => clearInterval(intervalId);
     }, []);
 

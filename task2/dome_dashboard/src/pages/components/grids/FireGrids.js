@@ -1,7 +1,7 @@
 import fake_data from '../../../util/fake_data'
 import classNames from 'classnames';
 import React, {useEffect} from 'react';
-import {using_fake_data} from '../../../util/config';
+import {update_interval, using_fake_data} from '../../../util/config';
 import apis from '../../../util/apis';
 
 const FireGrids = () => {
@@ -12,11 +12,10 @@ const FireGrids = () => {
             try {
                 let response;
                 if (using_fake_data) {
-                    response = set_grids(fake_data.grids);
+                    set_grids(fake_data.grids);
                 } else {
                     response = await fetch(apis.get_grids);
                     response = await response.json();
-                    console.log(response.result.map(entry => JSON.parse(entry.data)))
                     response = response.result.map(entry => JSON.parse(entry.data));
                 
                     let matrix = []
@@ -31,13 +30,13 @@ const FireGrids = () => {
                     for(let entry of response){
                         if(!entry.fires) continue
                         for(let d of entry.fires){
-                            matrix[Math.floor(d.fx / 50) + 4][Math.floor(-d.fy / 50) + 4] = 1
+                            // Input axis position is in range [-100, 100], so we need to scale it to [0, 4]
+                            matrix[Math.floor(d.fx / 50) + 2][Math.floor(-d.fy / 50) + 2] = 1
                         }
                     }
                     
                     set_grids(matrix);
                 }
-                
 
                 console.log('Updated grids');
             } catch (err) {
@@ -47,7 +46,7 @@ const FireGrids = () => {
 
         update_grids().then(() => console.log('Initialized grids.'));
 
-        const intervalId = setInterval(update_grids, 10000);
+        const intervalId = setInterval(update_grids, update_interval);
         return () => clearInterval(intervalId);
     }, []);
 

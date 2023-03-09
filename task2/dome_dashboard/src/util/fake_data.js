@@ -1,90 +1,79 @@
 const fake_data = {
     air: [
         {
-            device_id: 22,
-            time_stamp: '10:23:22',
-            pm_2_5: 11.2,
-            pm_10: 50
+            timestamp: "10:23:26",
+            "pm2.5": 11,
+            "pm10": 45
         },
         {
-            device_id: 22,
-            time_stamp: '10:23:23',
-            pm_2_5: 18.2,
-            pm_10: 80.2
+            timestamp: "10:23:27",
+            "pm2.5": 11,
+            "pm10": 45
         },
         {
-            device_id: 22,
-            time_stamp: '10:23:24',
-            pm_2_5: 32,
-            pm_10: 20
+            timestamp: "10:23:28",
+            "pm2.5": 11,
+            "pm10": 45
         }
     ],
     weather: [
         {
-            device_id: 33,
-            time_stamp: '10:23:22',
-            temperature: 54,
+            timestamp: "10:23:26",
+            temperature: 21,
             humidity: 21.38,
             dew_point: 18.18,
             light: 95.14,
             pressure: 956.6,
-            wind: 0.9,
+            wind_speed: 54,
             rain: 0
         },
         {
-            device_id: 33,
-            time_stamp: '10:23:23',
-            temperature: 32.11,
+            timestamp: "10:23:27",
+            temperature: 23,
             humidity: 21.38,
             dew_point: 18.18,
             light: 95.14,
             pressure: 956.6,
-            wind: 22,
-            rain: 0
+            wind_speed: 21,
+            rain: 23
         },
         {
-            device_id: 33,
-            time_stamp: '10:23:24',
-            temperature: 62,
+            timestamp: "10:23:28",
+            temperature: 52,
             humidity: 21.38,
             dew_point: 18.18,
             light: 95.14,
             pressure: 956.6,
-            wind: 3,
-            rain: 0
+            wind_speed: 54,
+            rain: 12
         }
     ],
-    way_points: [
+    waypoints: [
         {
             time_stamp: '10:23:22',
-            x_axis: 0,
-            y_axis: -25,
-            z_axis: 100
+            x: 0,
+            y: 25,
+            z: 100
         },
         {
             time_stamp: '10:23:22',
-            x_axis: 0,
-            y_axis: -25,
-            z_axis: 100
+            x: 0,
+            y: -25,
+            z: 100
         },
         {
             time_stamp: '10:23:22',
-            x_axis: 0,
-            y_axis: -25,
-            z_axis: 100
+            x: 0,
+            y: -25,
+            z: 40
         }
     ],
-    grids: []
-}
-
-// Generate random grid
-const row_l = 6, col_l = 8;
-for(let i = 0; i < row_l; i++){
-    const row = []
-    for(let j = 0; j < col_l; j++){
-        row.push(Math.random() < 0.5 ? -1 : 1)
-    }
-    fake_data.grids.push(row)
-}
+    grids: [
+        [1, 0, 0, 0],
+        [1, 1, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+    ]
+};
 
 export default fake_data;

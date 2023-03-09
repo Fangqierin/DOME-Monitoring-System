@@ -2,9 +2,11 @@
 
 .live-preview{
   @include Base.flex_div();
+  justify-content: flex-start;
 
   &__img{
     height: 16em;
+    max-width: 28.44em;
     flex: 1;
     margin: 1em;
   }

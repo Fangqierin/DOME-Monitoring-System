@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 
-import { using_fake_data } from '../../../util/config';
+import { update_interval, using_fake_data } from '../../../util/config';
 import fake_data from '../../../util/fake_data';
 import apis from '../../../util/apis';
 
@@ -14,7 +14,7 @@ const FlightPath = () => {
             try {
                 let response;
                 if (using_fake_data) {
-                    response = fake_data.way_points;
+                    response = fake_data.waypoints;
                 } else {
                     response = await fetch(apis.get_grids);
                     response = await response.json();
@@ -31,7 +31,7 @@ const FlightPath = () => {
 
         update_way_points().then(() => console.log('Initialized way points.'));
 
-        const intervalId = setInterval(update_way_points, 10000);
+        const intervalId = setInterval(update_way_points, update_interval);
         return () => clearInterval(intervalId);
     }, []);
 
@@ -39,7 +39,7 @@ const FlightPath = () => {
 
     return <>
         <h2 className="home-subtitle">Flight Path</h2>
-        <div className='chart-area' onDoubleClick={() => window.open('/chart/way_points', '_blank')}>
+        <div className='chart-area' onDoubleClick={() => window.open('/chart/waypoints', '_blank')}>
             <WayPointGraph way_points={way_points}/>
         </div>
 
