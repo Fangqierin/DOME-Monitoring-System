@@ -1,6 +1,10 @@
 import React, {useEffect} from 'react';
 import apis from '../../../util/apis';
 import PreviewImage from './PreviewImage';
+
+import preview1 from '../../sources/preview1.jpg';
+import preview2 from '../../sources/preview2.jpg';
+import preview3 from '../../sources/preview3.jpg';
 import {using_fake_data} from '../../../util/config';
 
 const LivePreview = () => {
@@ -36,6 +40,14 @@ const LivePreview = () => {
             <h2 className="home-subtitle">Live Previews</h2>
             <div className='live-preview'>
                 {
+                    using_fake_data
+                    ?
+                    <>
+                        <img className='live-preview__img' src={ preview1 } alt='Preview unavailable'/>
+                        <img className='live-preview__img' src={ preview2 } alt='Preview unavailable'/>
+                        <img className='live-preview__img' src={ preview3 } alt='Preview unavailable'/>
+                    </>
+                    :
                     file_names.map(filename =>
                         filename && <PreviewImage key={filename} filename={filename}/>
                     )

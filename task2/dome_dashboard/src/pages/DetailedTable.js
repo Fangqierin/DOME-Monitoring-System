@@ -21,7 +21,7 @@ const DetailedTable = () =>{
                 } else {
                     response = await fetch(`${apis.get_data}?collection_name=${name}`);
                     response = await response.json();
-                    response = response.result;
+                    response = response.result.map(entry => JSON.parse(entry.data));
                 }
                 set_data(response);
 

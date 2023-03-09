@@ -23,11 +23,28 @@ const ChartArea = () =>{
                 } else {
                     let res = await fetch(`${apis.get_data}?collection_name=weather`);
                     let data = await res.json();
-                    new_data_param.weather_params = data.result;
+                    new_data_param.weather_params = data.result.map(entry => JSON.parse(entry.data))
+                    new_data_param.weather_params.sort(
+                        (a, b) => {
+                            const [aH, aM, as] = a.timestamp.split(":")
+                            const [bH, bM, bs] = b.timestamp.split(":")
+
+                            return (aH - bH) || (aM - bM) || (as - bs)
+                        }
+                    );
 
                     res = await fetch(`${apis.get_data}?collection_name=air`);
                     data = await res.json();
-                    new_data_param.air_qualities = data.result;
+                    new_data_param.air_qualities = data.result.map(entry => JSON.parse(entry.data));
+                    new_data_param.air_qualities = new_data_param.air_qualities.sort(
+                        (a, b) => {
+                            const [aH, aM, as] = a.timestamp.split(":")
+                            const [bH, bM, bs] = b.timestamp.split(":")
+
+                            return (aH - bH) || (aM - bM) || (as - bs)
+                        }
+                    );
+                    console.log(new_data_param)
                 }
                 set_data_param(new_data_param);
 
@@ -39,7 +56,7 @@ const ChartArea = () =>{
 
         update_data().then(() => console.log('Initialized charts.'));
 
-        const intervalId = setInterval(update_data, 10000);
+        const intervalId = setInterval(update_data, 5000);
         return () => clearInterval(intervalId);
     }, []);
 

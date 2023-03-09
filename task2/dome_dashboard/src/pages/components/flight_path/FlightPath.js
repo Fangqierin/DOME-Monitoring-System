@@ -14,11 +14,11 @@ const FlightPath = () => {
             try {
                 let response;
                 if (using_fake_data) {
-                    response = fake_data.grids;
+                    response = fake_data.way_points;
                 } else {
-                    response = await fetch(`${apis.get_data}?collection_name=way_points`);
+                    response = await fetch(apis.get_grids);
                     response = await response.json();
-                    response = response.result;
+                    response = response.result.map(entry => JSON.parse(entry.data).location);
                     console.log(response)
                 }
                 set_way_points(response);

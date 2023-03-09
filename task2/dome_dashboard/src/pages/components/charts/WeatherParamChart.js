@@ -8,13 +8,13 @@ const WeatherParamChart = ({weather_params}) =>
     weather_params &&
         <div className='chart-area' onClick={() => window.open('/chart/weather', '_blank')}>
             <ChartModule chart={
-                <Line data={line_chart_reformat_data(weather_params, "time_stamp", ["temperature"])} />
+                <Line data={line_chart_reformat_data(weather_params, "timestamp", ["temperature"])} />
             } title='Temperature'/>
             <ChartModule chart={
-                <Line data={line_chart_reformat_data(weather_params, "time_stamp", ["wind"])} />
+                <Line data={line_chart_reformat_data(weather_params, "timestamp", ["wind_speed"])} />
             } title='Wind'/>
             <ChartModule chart={
-                <Line data={line_chart_reformat_data(weather_params, "time_stamp", ["rain"])} />
+                <Line data={line_chart_reformat_data(weather_params, "timestamp", ["rain"])} />
             } title='Rain'/>
         </div>
 

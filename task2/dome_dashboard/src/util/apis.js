@@ -1,4 +1,4 @@
-const server = 'http://169.234.31.237:5000/';
+const server = 'http://192.168.0.100:5000/';
 
 const apis = {
     get_data: server + 'get_data',

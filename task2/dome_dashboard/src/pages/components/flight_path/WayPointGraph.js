@@ -8,9 +8,11 @@ const WayPointGraph = ({way_points}) => {
     });
 
     useEffect(() => {
-        const x = way_points.map(p => p.x_axis);
-        const y = way_points.map(p => p.y_axis);
-        const z = way_points.map(p => p.z_axis);
+        if(!way_points || way_points.length === 0) return;
+
+        const x = way_points.map(p => Number(p.x));
+        const y = way_points.map(p => Number(p.y));
+        const z = way_points.map(p => Number(p.z));
         const lastPointIndex = way_points.length - 1;
 
         const trace = {
@@ -32,7 +34,7 @@ const WayPointGraph = ({way_points}) => {
             scene: {
                 xaxis: { range: [-100, 100] },
                 yaxis: { range: [-100, 100] },
-                zaxis: { range: [-100, 100] }
+                zaxis: { range: [-100, 120] }
             }
         };
         const data = [trace];

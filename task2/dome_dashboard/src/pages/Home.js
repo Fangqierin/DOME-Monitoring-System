@@ -13,9 +13,11 @@ import FlightPath from './components/flight_path/FlightPath';
 const Home = () => {
     return (
         <div className='home'>
-            <h1 className='home-title'>Dome Dashboard</h1>
+            <h1 className='home-title'>DOME Dashboard</h1>
 
-            <LivePreview/>
+            { 
+                <LivePreview/> 
+            }
             <FireGrids/>
             <FlightPath/>
 

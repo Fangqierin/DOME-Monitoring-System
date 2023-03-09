@@ -12,13 +12,32 @@ const FireGrids = () => {
             try {
                 let response;
                 if (using_fake_data) {
-                    response = fake_data.grids;
+                    response = set_grids(fake_data.grids);
                 } else {
                     response = await fetch(apis.get_grids);
                     response = await response.json();
-                    response = JSON.parse(response.result.grids);
+                    console.log(response.result.map(entry => JSON.parse(entry.data)))
+                    response = response.result.map(entry => JSON.parse(entry.data));
+                
+                    let matrix = []
+                    for(let i=0; i<4; i++){
+                        let row = []
+                        for(let j=0; j<4; j++){
+                            row.push(0)
+                        }
+                        matrix.push(row)
+                    }
+
+                    for(let entry of response){
+                        if(!entry.fires) continue
+                        for(let d of entry.fires){
+                            matrix[Math.floor(d.fx / 50) + 4][Math.floor(-d.fy / 50) + 4] = 1
+                        }
+                    }
+                    
+                    set_grids(matrix);
                 }
-                set_grids(response);
+                
 
                 console.log('Updated grids');
             } catch (err) {
