@@ -35,7 +35,7 @@ while True:
     else:
         # insert the data into the corresponding collection in MongoDB
         collection = db[topic]
-        collection.insert_one({"filename": filename, "data": data})
+        collection.insert_one({"filename": filename, "data": data.decode()})
 
     # print out a confirmation message
     print(f"Received {len(data)} bytes on topic {topic}")

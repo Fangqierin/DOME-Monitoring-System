@@ -18,7 +18,7 @@ def get_data():
     try:
         collection_name = request.args.get('collection_name')
         collection = mongo.db[collection_name]
-        data = collection.find().sort([('_id', -1)]).limit(3 if collection_name == "images" else 5)
+        data = collection.find().sort([('_id', -1)]).limit(9 if collection_name == "images" else 5)
         return json_util.dumps({'result': list(data)})
     except Exception as e:
         return jsonify({'error': str(e)})
@@ -37,8 +37,8 @@ def get_image(filename):
 def get_grids():
     try:
         collection = mongo.db['grids']
-        data = collection.find().sort([('_id', -1)]).limit(1)
-        return json_util.dumps({'result': data[0]})
+        data = collection.find().sort([('_id', -1)])
+        return json_util.dumps({'result': data})
     except Exception as e:
         return jsonify({'error': str(e)})
 
@@ -47,8 +47,11 @@ def get_grids():
 def get_unread_waypoints():
     try:
         collection = mongo.db['way_points']
-        documents = collection.find({"read": "0"})
-        return jsonify(list(documents))
+        documents = list(collection.find({"read": "0"}))
+        for doc in documents:
+            collection.update_one({'_id': doc['_id']}, {'$set': {'read': '1'}})
+            doc['read'] = '1'
+        return jsonify(documents)
     except Exception as e:
         return jsonify({'error': str(e)})
 
@@ -67,6 +70,7 @@ def add_waypoint():
         return jsonify({'message': 'Waypoint added successfully'})
     except Exception as e:
         return jsonify({'error': str(e)})
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
