@@ -12,16 +12,12 @@ const FireGrids = () => {
             try {
                 let response;
                 if (using_fake_data) {
-                    set_grids(fake_data.grids);
-                } else {
-                    response = await fetch(apis.get_grids);
-                    response = await response.json();
-                    response = response.result.map(entry => JSON.parse(entry.data));
-                
-                    let matrix = []
+					response = fake_data.grids;
+					
+					let matrix = []
                     for(let i=0; i<4; i++){
                         let row = []
-                        for(let j=0; j<4; j++){
+                        for(let j=0; j<3; j++){
                             row.push(0)
                         }
                         matrix.push(row)
@@ -31,7 +27,30 @@ const FireGrids = () => {
                         if(!entry.fires) continue
                         for(let d of entry.fires){
                             // Input axis position is in range [-100, 100], so we need to scale it to [0, 4]
-                            matrix[Math.floor(d.fx / 50) + 2][Math.floor(-d.fy / 50) + 2] = 1
+                            matrix[Math.floor((200 - (d.fy + 100)) / 50)][Math.floor((d.fx + 75) / 50)] = 1
+                        }
+                    }
+					
+                    set_grids(matrix);
+                } else {
+                    response = await fetch(apis.get_grids);
+                    response = await response.json();
+                    response = response.result.map(entry => JSON.parse(entry.data));
+                
+                    let matrix = []
+                    for(let i=0; i<4; i++){
+                        let row = []
+                        for(let j=0; j<3; j++){
+                            row.push(0)
+                        }
+                        matrix.push(row)
+                    }
+
+                    for(let entry of response){
+                        if(!entry.fires) continue
+                        for(let d of entry.fires){
+                            // Input axis position is in range [-100, 100], so we need to scale it to [0, 4]
+                            matrix[Math.floor((d.fx + 75) / 50)][Math.floor((d.fy + 125) / 50)] = 1
                         }
                     }
                     
