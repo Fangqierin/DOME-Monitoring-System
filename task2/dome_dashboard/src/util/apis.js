@@ -4,6 +4,7 @@ const apis = {
     get_data: server_url + 'get_data',
     get_image: server_url + 'get_image/',
     get_grids: server_url + 'get_grids',
+    get_processed_data: server_url + 'processed_data'
 };
 
 export default apis;

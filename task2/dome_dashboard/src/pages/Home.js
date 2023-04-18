@@ -1,6 +1,6 @@
 import React from "react";
 
-import FireGrids from './components/grids/FireGrids';
+import FirePreview from './components/fire_status/FirePreview';
 import LivePreview from './components/previews/LivePreview';
 import ChartArea from './components/charts/ChartArea';
 
@@ -18,7 +18,7 @@ const Home = () => {
             { 
                 <LivePreview/> 
             }
-            <FireGrids/>
+            <FirePreview/>
             <FlightPath/>
 
             <ChartArea/>

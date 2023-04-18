@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 
-import { update_interval, using_fake_data } from '../../../util/config';
+import {update_interval, using_fake_data} from '../../../util/config';
 import fake_data from '../../../util/fake_data';
 import apis from '../../../util/apis';
 
@@ -19,7 +19,6 @@ const FlightPath = () => {
                     response = await fetch(apis.get_grids);
                     response = await response.json();
                     response = response.result.map(entry => JSON.parse(entry.data).location);
-                    console.log(response)
                 }
                 set_way_points(response);
 
@@ -35,7 +34,7 @@ const FlightPath = () => {
         return () => clearInterval(intervalId);
     }, []);
 
-    if(!way_points) return (<></>);
+    if (!way_points) return (<></>);
 
     return <>
         <h2 className="home-subtitle">Flight Path</h2>

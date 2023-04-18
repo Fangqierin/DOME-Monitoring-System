@@ -12,7 +12,7 @@ const PreviewImage = ({ filename }) =>{
             setImageUrl(url);
         };
 
-        getImage().then(r => console.log(filename + ' loaded.'));
+        getImage().then(_ => console.log(filename + ' loaded.'));
     }, [filename]);
 
     return (
