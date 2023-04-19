@@ -6,5 +6,12 @@
   &__graph{
     @include Base.flex_div(column);
     align-items: flex-start;
+
+    margin: 1em 2em;
+    padding: 1em 2em;
+    border-radius: 4px;
+
+    background: white;
+    box-shadow: 0 0 10px 5px rgba(0,0,0,0.2);
   }
 }

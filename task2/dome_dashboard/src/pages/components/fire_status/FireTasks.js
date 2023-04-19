@@ -63,7 +63,7 @@ function FireTasks({tasks}) {
     }, [tasks]);
 
     return (
-        <div className="task-canvas">
+        <div className="grid-area__graph">
             <h2 className="home-subtitle">Tasks</h2>
             <canvas ref={canvasRef} width={200} height={240}/>
         </div>
