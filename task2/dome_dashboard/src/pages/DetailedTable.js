@@ -19,15 +19,9 @@ const DetailedTable = () =>{
                 if (using_fake_data) {
                     response = fake_data[name];
                 } else {
-                    if(name === 'waypoints') {
-                        response = await fetch(apis.get_grids);
-                        response = await response.json();
-                        response = response.result.map(entry => JSON.parse(entry.data).location);
-                    }else {
-                        response = await fetch(`${apis.get_data}?collection_name=${name}`);
-                        response = await response.json();
-                        response = response.result.map(entry => JSON.parse(entry.data));
-                    }
+                    response = await fetch(`${apis.get_data}?collection_name=${name}`);
+                    response = await response.json();
+                    response = response.result.map(entry => JSON.parse(entry.data));
                 }
                 set_data(response);
 

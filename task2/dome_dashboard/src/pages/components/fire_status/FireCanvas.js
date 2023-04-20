@@ -67,7 +67,7 @@ function FireCanvas({grids}) {
 
     return (
         <div className={'grid-area__graph'}>
-            <h2 className="home-subtitle">Preview</h2>
+            <div className="home__module__title">Preview</div>
             <canvas ref={canvasRef} width={200} height={240}/>
         </div>
     );

@@ -1,0 +1,58 @@
+.Task-param{
+  margin: 1em 2em;
+
+  font-size: 1.2em;
+
+  &__label{
+    display: inline-block;
+    box-sizing: border-box;
+
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    width: 5em;
+
+    margin: 0.4em 0;
+
+    text-align: center;
+
+    color: aliceblue;
+    background-color: #d63031;
+  }
+
+  &__input{
+    display: inline-block;
+    box-sizing: border-box;
+    width: 5em;
+    margin: 0.4em 0 0.4em 2em;
+    padding: 0 0.2em;
+    outline: none;
+    text-align: center;
+    border: 1px solid black;
+    font-size: 1.06em;
+
+    &:focus{
+      border: 1px solid #d63031;
+    }
+  }
+
+  &__button{
+    display: inline-block;
+    box-sizing: border-box;
+    width: 12em;
+    margin: 1em 0;
+    padding: 1em 2em;
+    outline: none;
+    text-align: center;
+    border-radius: 4px;
+    border: 0;
+    font-size: 1.06em;
+
+    color: aliceblue;
+    background-color: #d63031;
+
+    &:hover{
+      cursor: pointer;
+      opacity: 0.8;
+    }
+  }
+}

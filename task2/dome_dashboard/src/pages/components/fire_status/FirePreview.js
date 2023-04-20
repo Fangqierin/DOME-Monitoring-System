@@ -6,6 +6,7 @@ import apis from '../../../util/apis';
 import FireCanvas from './FireCanvas';
 import FireGrids from './FireGrids';
 import FireTasks from './FireTasks';
+import FireEAT from './FireEAT';
 
 const FirePreview = () => {
     const [grids, set_grids] = React.useState(undefined);
@@ -42,7 +43,6 @@ const FirePreview = () => {
                     response = await fetch(apis.get_processed_data);
                     response = await response.json();
                     response = response.result;
-                    console.log(response)
 
                     set_processed_data(response);
                 }
@@ -62,7 +62,7 @@ const FirePreview = () => {
 
     return (
         <>
-            <h2 className="home-subtitle">Fire Grids</h2>
+            <h2 className="home-subtitle">Fire Status</h2>
             <div className='grid-area'>
                 {
                     grids && <FireCanvas grids={grids}/>
@@ -72,6 +72,7 @@ const FirePreview = () => {
                         <>
                             <FireGrids grids={processed_data.grids}/>
                             <FireTasks tasks={processed_data.tasks}/>
+                            <FireEAT grids={processed_data.estimated_fire_arrival_time}/>
                         </>
                     )
                 }

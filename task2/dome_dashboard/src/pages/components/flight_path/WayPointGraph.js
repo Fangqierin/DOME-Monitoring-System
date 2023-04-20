@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Plotly from 'react-plotly.js';
 
-const WayPointGraph = ({way_points}) => {
+const WayPointGraph = ({way_points, title}) => {
     const[params, setParams] = useState({
         data: [],
         layout: {}
@@ -35,13 +35,21 @@ const WayPointGraph = ({way_points}) => {
                 xaxis: { range: [-100, 100] },
                 yaxis: { range: [-100, 100] },
                 zaxis: { range: [-100, 120] }
+            },
+            title: {
+                text: title,
+                font: {
+                    size: 20
+                },
+                yref: 'paper',
+                automargin: true,
             }
         };
         const data = [trace];
         setParams({ data, layout });
 
         console.log('Generated way point graph');
-    }, [way_points]);
+    }, [title, way_points]);
 
     return (
         <div>
