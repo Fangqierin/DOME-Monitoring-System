@@ -1,5 +1,7 @@
+import json
 import os
 import sys
+import math
 
 import numpy as np
 from flask import Flask, send_file, request, jsonify
@@ -48,44 +50,40 @@ def get_grids():
 @app.route('/waypoint', methods=['GET'])
 def get_waypoints():
     try:
+        not_drone = request.args.get('not_drone')
+
         collection_grid = mongo.db['grids']
         fire_data = list(collection_grid.find())
 
-        if fire_data:
+        if not not_drone and fire_data:
             # Use fire status data to update waypoints
-            size = (3, 4)  # Fire Setting Grid Size
+            size = (4, 3)  # Fire Setting Grid Size
             grids = np.full((size[0], size[1]), 0)
-            grids[0, 0] = 0
-            grids[1, 0] = 0
-            grids[2, 1] = 1
+
+            for f in fire_data:
+                for fire in json.loads(f['data'])['fires']:
+                    row, col = min(math.floor((fire['fx'] + 75) / 50), 2), min(math.floor((-fire['fy'] + 100) / 50), 3)
+                    grids[row][col] = 1
 
             tasks, estimated_fire_arrival_time, waypoints = (
                 {
-                    (3, 4): {'BM': (0, 3), 'FT': (0, -1)},
-                    (3, 3): {'FT': (0, -1)},
                     (3, 2): {'FT': (0, -1)},
                     (3, 1): {'FT': (0, -1)},
                     (3, 0): {'FT': (0, -1)},
-                    (2, 4): {'BM': (0, 3), 'FT': (0, -1)},
-                    (2, 3): {'BM': (0, 3), 'FT': (0, -1)},
                     (2, 2): {'FI': (0, -1)},
                     (2, 1): {'FI': (0, -1)},
                     (2, 0): {'FI': (0, -1)},
-                    (1, 4): {'BM': (0, 3), 'FT': (0, -1)},
-                    (1, 3): {'BM': (0, 3), 'FT': (0, -1)},
                     (1, 2): {'FI': (0, -1)},
                     (1, 1): {'FI': (0, -1)},
                     (1, 0): {'FI': (0, -1)},
-                    (0, 4): {'BM': (0, 6), 'FT': (0, -1)},
-                    (0, 3): {'BM': (0, 3), 'FT': (0, -1)},
                     (0, 2): {'FI': (0, -1)},
                     (0, 1): {'FI': (0, -1)},
                     (0, 0): {'FI': (0, -1)}
                 },
-                [[0, 0, 0, 6, 9],
-                 [0, 0, 0, 6, 6],
-                 [0, 0, 0, 6, 6],
-                 [3, 3, 3, 3, 6]],
+                [[0, 6, 9],
+                 [0, 6, 6],
+                 [0, 6, 6],
+                 [3, 3, 6]],
                 [(0.5, 0.5, 0), (0.5, 0.5, 1.1), (1.5, 0.5, 1.1), (2.5, 0.5, 1.1), (2.5, 1.5, 1.1), (1.5, 1.5, 1.1),
                  (0.5, 1.5, 1.1), (0.5, 2.5, 1.1), (1.5, 2.5, 1.1), (2.5, 2.5, 1.1), (2.5, 3.5, 1.1), (1.5, 3.5, 1.1),
                  (1.5, 4.5, 1.1), (2.5, 4.5, 1.1), (3.5, 4.5, 1.1), (0.5, 4.5, 1.1), (0.5, 3.5, 1.1), (3.5, 3.5, 1.1),
@@ -161,6 +159,27 @@ def get_processed_data():
         collection = mongo.db['processed_data']
         data = collection.find_one({})
         return json_util.dumps({'result': data})
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+
+@app.route('/task_config', methods=['GET'])
+def get_task_config():
+    try:
+        collection = mongo.db['task_config']
+        data = collection.find_one({})
+        return json_util.dumps({'result': data})
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+
+@app.route('/task_config', methods=['POST'])
+def overwrite_task_config():
+    try:
+        collection = mongo.db['task_config']
+        data = request.get_json()
+        collection.replace_one({}, data)
+        return jsonify({'message': 'Task config updated successfully'})
     except Exception as e:
         return jsonify({'error': str(e)})
 
