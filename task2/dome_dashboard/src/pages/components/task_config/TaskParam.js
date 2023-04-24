@@ -60,4 +60,4 @@ function TaskParam({init_config}) {
     );
 }
 
-export default TaskParam;
+export default React.memo(TaskParam);

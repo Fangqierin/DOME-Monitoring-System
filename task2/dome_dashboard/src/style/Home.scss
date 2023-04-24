@@ -1,12 +1,8 @@
 @use 'Base';
 
 .home{
-  &-title{
-    margin: 0.6em 1rem;
-
-    font-size: 2.8em;
-    font-family: Base.$font-title;
-  }
+  height: calc(100vh - 5em);
+  overflow-y: auto;
 
   &-subtitle{
     margin: 0.6em 1rem;

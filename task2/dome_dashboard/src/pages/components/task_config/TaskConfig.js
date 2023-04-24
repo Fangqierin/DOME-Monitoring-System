@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import apis from '../../../util/apis';
 import {update_interval} from '../../../util/config';
 
@@ -46,4 +46,4 @@ const TaskConfig = () => {
     );
 }
 
-export default TaskConfig;
+export default React.memo(TaskConfig);

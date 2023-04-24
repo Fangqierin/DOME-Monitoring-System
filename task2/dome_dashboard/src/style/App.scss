@@ -10,7 +10,16 @@
   width: 100vw;
 
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: hidden;
 
   background: Base.$background-light;
+
+  font-size: 0.9em;
+
+
+  /* Hide the default scrollbar */
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
+

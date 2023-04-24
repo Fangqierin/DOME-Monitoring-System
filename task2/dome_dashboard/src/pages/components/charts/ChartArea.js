@@ -21,7 +21,7 @@ const ChartArea = () =>{
                         weather_params: fake_data.weather,
                     };
                 } else {
-                    let res = await fetch(`${apis.get_data}?collection_name=weather`);
+                    let res = await fetch(`${apis.get_data}?collection_name=weather&limit_num=5`);
                     let data = await res.json();
                     new_data_param.weather_params = data.result.map(entry => JSON.parse(entry.data))
                     new_data_param.weather_params.sort(
@@ -33,7 +33,7 @@ const ChartArea = () =>{
                         }
                     );
 
-                    res = await fetch(`${apis.get_data}?collection_name=air`);
+                    res = await fetch(`${apis.get_data}?collection_name=air&limit_num=5`);
                     data = await res.json();
                     new_data_param.air_qualities = data.result.map(entry => JSON.parse(entry.data));
                     new_data_param.air_qualities = new_data_param.air_qualities.sort(
@@ -68,4 +68,4 @@ const ChartArea = () =>{
     )
 }
 
-export default ChartArea;
+export default React.memo(ChartArea);

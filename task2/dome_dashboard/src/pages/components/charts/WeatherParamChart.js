@@ -19,4 +19,4 @@ const WeatherParamChart = ({weather_params}) =>
         </div>
 
 
-export default WeatherParamChart;
+export default React.memo(WeatherParamChart);

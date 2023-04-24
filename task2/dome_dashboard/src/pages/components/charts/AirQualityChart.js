@@ -14,4 +14,4 @@ const AirQualityChart = ({air_qualities}) =>
             } title='PM 10'/>
         </div>
 
-export default AirQualityChart;
+export default React.memo(AirQualityChart);

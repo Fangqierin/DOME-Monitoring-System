@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Plotly from 'react-plotly.js';
 
 const WayPointGraph = ({way_points, title}) => {
@@ -62,4 +62,4 @@ const WayPointGraph = ({way_points, title}) => {
     );
 }
 
-export default WayPointGraph;
+export default React.memo(WayPointGraph);

@@ -21,7 +21,6 @@ const FlightPath = () => {
                     response = await response.json();
                     response = response.result.map(entry => JSON.parse(entry.data).location);
                 }
-                console.log(response)
                 set_flightpath(response);
 
                 console.log('Updated way points');
@@ -67,7 +66,7 @@ const FlightPath = () => {
 
     return <>
         <h2 className="home-subtitle">Flight Path</h2>
-        <div className='chart-area' onDoubleClick={() => window.open('/waypoints', '_blank')}>
+        <div className='chart-area'>
             {flightpath && <WayPointGraph way_points={flightpath} title='Flight Path'/>}
             {waypoints && <WayPointGraph way_points={waypoints} title='Waypoints'/>}
         </div>
@@ -75,4 +74,4 @@ const FlightPath = () => {
     </>
 }
 
-export default FlightPath;
+export default React.memo(FlightPath);

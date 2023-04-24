@@ -80,4 +80,4 @@ function FireEAT({grids}) {
     );
 }
 
-export default FireEAT;
+export default React.memo(FireEAT);

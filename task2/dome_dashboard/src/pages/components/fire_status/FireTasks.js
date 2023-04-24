@@ -93,4 +93,4 @@ function FireTasks({tasks}) {
     );
 }
 
-export default FireTasks;
+export default React.memo(FireTasks);

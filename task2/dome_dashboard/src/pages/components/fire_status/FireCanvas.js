@@ -73,4 +73,4 @@ function FireCanvas({grids}) {
     );
 }
 
-export default FireCanvas;
+export default React.memo(FireCanvas);

@@ -1,9 +1,16 @@
-.Task-param{
+@use 'Base';
+
+.task-detail{
+  height: calc(100vh - 5em);
+  overflow-y: auto;
+}
+
+.Task-param {
   margin: 1em 2em;
 
   font-size: 1.2em;
 
-  &__label{
+  &__label {
     display: inline-block;
     box-sizing: border-box;
 
@@ -16,10 +23,10 @@
     text-align: center;
 
     color: aliceblue;
-    background-color: #d63031;
+    background-color: Base.$purple_light;
   }
 
-  &__input{
+  &__input {
     display: inline-block;
     box-sizing: border-box;
     width: 5em;
@@ -30,12 +37,12 @@
     border: 1px solid black;
     font-size: 1.06em;
 
-    &:focus{
-      border: 1px solid #d63031;
+    &:focus {
+      border: 1px solid Base.$purple_dark;
     }
   }
 
-  &__button{
+  &__button {
     display: inline-block;
     box-sizing: border-box;
     width: 12em;
@@ -48,9 +55,9 @@
     font-size: 1.06em;
 
     color: aliceblue;
-    background-color: #d63031;
+    background-color: Base.$purple_dark;
 
-    &:hover{
+    &:hover {
       cursor: pointer;
       opacity: 0.8;
     }

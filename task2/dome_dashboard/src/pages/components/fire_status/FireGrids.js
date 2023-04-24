@@ -1,4 +1,4 @@
-import {useEffect, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 
 function FireGrids({ grids }) {
     const canvasRef = useRef(null);
@@ -65,14 +65,14 @@ function FireGrids({ grids }) {
     }, [grids]);
 
     return (
-        <div className="grid-area__graph" onClick={() => window.open('/tasks', '_blank')}>
+        <div className="grid-area__graph">
             <div className="home__module__title">Grids</div>
             <canvas ref={canvasRef} width={200} height={240} />
         </div>
     );
 }
 
-export default FireGrids;
+export default React.memo(FireGrids);
 
 
 

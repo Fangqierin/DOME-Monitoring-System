@@ -18,7 +18,7 @@ const LivePreview = () => {
                     return;
                 }
 
-                const response = await fetch(apis.get_data + "?collection_name=images");
+                const response = await fetch(apis.get_data + "?collection_name=images&limit_num=3");
                 const data = await response.json();
 
                 set_file_names(data.result.map(item => item.filename));
@@ -48,11 +48,10 @@ const LivePreview = () => {
                         <img className='live-preview__img' src={ preview3 } alt='Preview unavailable'/>
                     </>
                     :
-                    file_names.map(filename =>
+                    file_names.map((filename, i) =>
                         filename && <PreviewImage key={filename} filename={filename}/>
                     )
                 }
-
             </div>
         </>
 
@@ -60,4 +59,4 @@ const LivePreview = () => {
 }
 
 
-export default LivePreview;
+export default React.memo(LivePreview);

@@ -1,0 +1,33 @@
+@use 'Base';
+
+.image-detail {
+  @include Base.flex_div(row);
+
+  &__list{
+    list-style: none;
+
+    overflow-y: auto;
+  }
+
+  &__list, &__image-wrapper{
+    @include Base.flex_div(column);
+
+    margin: 2em 0;
+    height: calc(100vh - 9em);
+    flex: 1;
+
+    &__item{
+      margin: 1em 0;
+      font-size: 1.2em;
+
+      &:hover{
+        opacity: 0.8;
+        cursor: pointer;
+      }
+
+      &--focus{
+        transform: scale(1.2);
+      }
+    }
+  }
+}

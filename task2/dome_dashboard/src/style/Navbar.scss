@@ -1,0 +1,46 @@
+@use 'Base';
+
+.navbar{
+  display: flex;
+  flex-direction: row;
+
+  position: fixed;
+  height: 3em;
+  width: 100vw;
+  top: 0;
+  z-index: 1;
+
+  list-style: none;
+  font-size: 1.6em;
+  color: Base.$text-light;
+  background: Base.$background-dark;
+
+  &__title{
+    width: 20em;
+
+    text-align: center;
+    line-height: 3em;
+    font-family: Base.$font-title;
+  }
+
+  &__item{
+    flex: 1;
+
+    text-align: center;
+    line-height: 3em;
+
+    &:hover{
+      opacity: 0.8;
+      color: Base.$text-focus;
+      cursor: pointer;
+    }
+
+    &--focus{
+      color: Base.$text-focus;
+    }
+  }
+}
+
+.nav-space{
+    height: 4.8em;
+}

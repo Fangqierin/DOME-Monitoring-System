@@ -16,8 +16,8 @@ const PreviewImage = ({ filename }) =>{
     }, [filename]);
 
     return (
-        imageUrl && <img className='live-preview__img' src={ imageUrl } alt='Preview unavailable'/>
+        imageUrl && <img className='live-preview__img' src={ imageUrl } key={ imageUrl } alt='Preview unavailable'/>
     );
 }
 
-export default PreviewImage;
+export default React.memo(PreviewImage);

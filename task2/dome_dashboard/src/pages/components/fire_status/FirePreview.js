@@ -82,4 +82,4 @@ const FirePreview = () => {
     );
 }
 
-export default FirePreview;
+export default React.memo(FirePreview);
