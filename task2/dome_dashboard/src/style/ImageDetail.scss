@@ -6,7 +6,6 @@
   &__list{
     list-style: none;
 
-    overflow-y: auto;
   }
 
   &__list, &__image-wrapper{
@@ -14,6 +13,8 @@
 
     margin: 2em 0;
     height: calc(100vh - 9em);
+    overflow-y: auto;
+    
     flex: 1;
 
     &__item{
@@ -29,5 +30,14 @@
         transform: scale(1.2);
       }
     }
+
+    img{
+      height: 16em !important;
+
+      &:nth-child(odd){
+        height: 8em !important;
+      }
+    }
+    
   }
 }

@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import apis from '../util/apis';
 
 import preview1 from './sources/preview1.jpg';
+import preview2 from './sources/preview2.jpg';
+import preview3 from './sources/preview3.jpg';
 import {update_interval, using_fake_data} from '../util/config';
 import PreviewImage from './components/previews/PreviewImage';
 
@@ -39,6 +41,7 @@ const ImageDetail = () => {
 
     if (using_fake_data) {
         let file_names = ['preview1.jpg', 'preview2.jpg', 'preview3.jpg'];
+        const selected_filename = file_names;
         return (
             <div className='image-detail'>
                 <ul className='image-detail__list'>
@@ -53,13 +56,15 @@ const ImageDetail = () => {
                     }
                 </ul>
                 <div className='image-detail__image-wrapper'>
-                    <img className='live-preview__img' src={preview1} alt='Preview unavailable'/>
+                    <img className='live-preview__img' src={ preview1 } alt='Preview unavailable'/>
+                    <img className='live-preview__img' src={ preview2 } alt='Preview unavailable'/>
+                    <img className='live-preview__img' src={ preview3 } alt='Preview unavailable'/>
                 </div>
             </div>
         );
     }
 
-    const filename = file_names[selectedImage]
+    const selected_filename = [file_names[selectedImage - 1], file_names[selectedImage], file_names[selectedImage + 166]]
 
     return (
         <div className='image-detail'>
@@ -76,7 +81,9 @@ const ImageDetail = () => {
             </ul>
             <div className='image-detail__image-wrapper'>
                 {
-                    filename && <PreviewImage filename={filename}/>
+                    selected_filename?.map(
+                        filename => filename && <PreviewImage filename={filename}/>
+                    )
                 }
             </div>
         </div>
