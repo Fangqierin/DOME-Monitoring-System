@@ -32,9 +32,9 @@ const WayPointGraph = ({way_points, title}) => {
             height: 640,
             // title: 'Flight Path',
             scene: {
-                xaxis: { range: [-100, 100] },
-                yaxis: { range: [-100, 100] },
-                zaxis: { range: [-100, 120] }
+                xaxis: { range: [0, 200] },
+                yaxis: { range: [0, 200] },
+                zaxis: { range: [0, 200] }
             },
             title: {
                 text: title,

@@ -35,16 +35,16 @@ function FireGrids({ grids }) {
         // Draw axis labels
         ctx.font = '12px sans-serif';
         ctx.fillStyle = 'black';
-        ctx.fillText('-75', 0, 220);
-        ctx.fillText('-25', 50, 220);
-        ctx.fillText('25', 100, 220);
-        ctx.fillText('75', 150, 220);
+        ctx.fillText('0', 0, 220);
+        ctx.fillText('50', 50, 220);
+        ctx.fillText('100', 100, 220);
+        ctx.fillText('150', 150, 220);
 
-        ctx.fillText('100', 160, 15);
-        ctx.fillText('50', 160, 65);
-        ctx.fillText('0', 160, 105);
-        ctx.fillText('-50', 160, 155);
-        ctx.fillText('-100', 160, 205);
+        ctx.fillText('200', 160, 15);
+        ctx.fillText('150', 160, 65);
+        ctx.fillText('100', 160, 105);
+        ctx.fillText('50', 160, 155);
+        ctx.fillText('0', 160, 205);
 
         // Draw fires
         const cellWidth = 50;
