@@ -10,5 +10,10 @@
     flex: 1;
     margin: 1em;
     object-fit: contain;
+
+    &--smaller{
+      height: 8em;
+      max-width: 14.22em;
+    }
   }
 }

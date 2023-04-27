@@ -216,14 +216,32 @@ const fake_data = {
                     }
                 ]
             },
-        task_config: {
-            param: {
-                BM: [1, 1],
-                FD:[0.5, 1],
-                FI:[0.5, 1],
-                FT:[1, 1]
+        task_config:
+            {
+                "param": {
+                    "BM": [
+                        1,
+                        3
+                    ],
+                    "FI": [
+                        5,
+                        1
+                    ],
+                    "FT": [
+                        1,
+                        1
+                    ],
+                    "FD": [
+                        0.5,
+                        1
+                    ]
+                },
+                "env": {
+                    "wind_speed": 5,
+                    "plan_time": 60
+                },
+                "trigger": true
             }
-        }
     }
 ;
 

@@ -11,7 +11,7 @@ import '../style/ImageDetail.scss';
 import classNames from 'classnames';
 
 const ImageDetail = () => {
-    const [file_names, set_file_names] = useState([]);
+    const [file_names, set_file_names] = useState(undefined);
     const [selectedImage, setSelectedImage] = useState(0);
 
     useEffect(() => {
@@ -41,7 +41,7 @@ const ImageDetail = () => {
 
     if (using_fake_data) {
         let file_names = ['preview1.jpg', 'preview2.jpg', 'preview3.jpg'];
-        const selected_filename = file_names;
+        let images = [preview1, preview2, preview3];
         return (
             <div className='image-detail'>
                 <ul className='image-detail__list'>
@@ -56,15 +56,21 @@ const ImageDetail = () => {
                     }
                 </ul>
                 <div className='image-detail__image-wrapper'>
-                    <img className='live-preview__img' src={ preview1 } alt='Preview unavailable'/>
-                    <img className='live-preview__img' src={ preview2 } alt='Preview unavailable'/>
-                    <img className='live-preview__img' src={ preview3 } alt='Preview unavailable'/>
+                    {
+                        selectedImage > 0 && <img className='live-preview__img live-preview__img--smaller' src={ images[selectedImage - 1] } alt='Preview unavailable'/>
+                    }
+                    {
+                        <img className='live-preview__img' src={ images[selectedImage] } alt='Preview unavailable'/>
+                    }
+                    {
+                        selectedImage < file_names.length - 1 && <img className='live-preview__img live-preview__img--smaller' src={ images[selectedImage + 1] } alt='Preview unavailable'/>
+                    }
                 </div>
             </div>
         );
     }
 
-    const selected_filename = [file_names[selectedImage - 1], file_names[selectedImage], file_names[selectedImage + 166]]
+    if (!file_names) return null;
 
     return (
         <div className='image-detail'>
@@ -81,9 +87,13 @@ const ImageDetail = () => {
             </ul>
             <div className='image-detail__image-wrapper'>
                 {
-                    selected_filename?.map(
-                        filename => filename && <PreviewImage filename={filename}/>
-                    )
+                    selectedImage > 0 && <PreviewImage filename={file_names[selectedImage - 1]} key={file_names[selectedImage - 1]} at_edge={true}/>
+                }
+                {
+                    <PreviewImage filename={file_names[selectedImage]} key={file_names[selectedImage]}/>
+                }
+                {
+                    selectedImage < file_names.length - 1 && <PreviewImage filename={file_names[selectedImage + 1]}  key={file_names[selectedImage + 1]} at_edge={true}/>
                 }
             </div>
         </div>

@@ -30,14 +30,5 @@
         transform: scale(1.2);
       }
     }
-
-    img{
-      height: 16em !important;
-
-      &:nth-child(odd){
-        height: 8em !important;
-      }
-    }
-    
   }
 }

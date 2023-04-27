@@ -9,6 +9,7 @@ import Navbar from './pages/components/nav/Navbar';
 
 import './style/App.scss';
 import './style/Navbar.scss';
+import './style/Icon.scss';
 import ImageDetail from './pages/ImageDetail';
 
 

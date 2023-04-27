@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import apis from '../../../util/apis';
-import {update_interval} from '../../../util/config';
+import axios from 'axios';
 
-import {using_fake_data} from '../../../util/config';
+import apis from '../../../util/apis';
+import { update_interval, using_fake_data } from '../../../util/config';
 import fake_data from '../../../util/fake_data';
 import TaskParam from './TaskParam';
+import TaskEnv from './TaskEnv';
+import TaskTrigger from './TaskTrigger';
+import TaskReset from './TaskReset';
 
 const TaskConfig = () => {
     const [task_config, set_task_config] = useState(undefined);
@@ -20,9 +23,9 @@ const TaskConfig = () => {
                 response = await response.json();
                 response = response.result;
                 delete response._id
-                set_task_config(response);
 
                 console.log('Updated task config');
+                set_task_config(response);
             } catch (err) {
                 console.error(err);
             }
@@ -38,10 +41,31 @@ const TaskConfig = () => {
         return () => clearInterval(intervalId);
     }, [])
 
+    const update_config = (config) => {
+        if(using_fake_data){
+            set_task_config({...config});
+            return;
+        }
+
+        axios.post(apis.post_task_config, config)
+            .then(response => {
+                console.log(response.data);
+                set_task_config({...config})
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    };
+
     return (
-        task_config && <div>
+        task_config && <div className='task-config'>
             <h2 className='home-subtitle'>Task Config</h2>
-            <TaskParam init_config={task_config}/>
+            <div className='task-config__area'>
+                <TaskParam init_config={task_config} update_config={update_config}/>
+                <TaskEnv init_config={task_config} update_config={update_config}/>
+                <TaskTrigger init_config={task_config} update_config={update_config}/>
+                <TaskReset update_config={update_config}/>
+            </div>
         </div>
     );
 }

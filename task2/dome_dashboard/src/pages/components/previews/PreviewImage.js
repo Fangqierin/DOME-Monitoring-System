@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import apis from '../../../util/apis';
+import classNames from 'classnames';
 
-const PreviewImage = ({ filename }) =>{
+const PreviewImage = ({ filename, at_edge }) =>{
     const [imageUrl, setImageUrl] = useState('');
 
     useEffect(() => {
@@ -16,7 +17,7 @@ const PreviewImage = ({ filename }) =>{
     }, [filename]);
 
     return (
-        imageUrl && <img className='live-preview__img' src={ imageUrl } key={ imageUrl } alt='Preview unavailable'/>
+        imageUrl && <img className={classNames('live-preview__img', at_edge && 'live-preview__img--smaller')} src={ imageUrl } key={ imageUrl } alt='Preview unavailable'/>
     );
 }
 

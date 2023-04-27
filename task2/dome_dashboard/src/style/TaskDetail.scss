@@ -5,7 +5,20 @@
   overflow-y: auto;
 }
 
-.Task-param {
+.task-config{
+  position: relative;
+
+  &__area{
+    @include Base.flex_div(row);
+    align-items: flex-start;
+
+    &__module{
+      flex: 1;
+    }
+  }
+}
+
+.task-param, .task-env, .task-trigger {
   margin: 1em 2em;
 
   font-size: 1.2em;
@@ -16,7 +29,7 @@
 
     border: 1px solid #ccc;
     border-radius: 2px;
-    width: 5em;
+    width: 6em;
 
     margin: 0.4em 0;
 
@@ -61,5 +74,34 @@
       cursor: pointer;
       opacity: 0.8;
     }
+  }
+}
+
+.task-trigger {
+  &__button{
+    width: 4em;
+    margin: 0.4em 0 0.4em 2em;
+    padding: 0 0.2em;
+
+    font-size: 1.06em;
+
+
+    border: 1px solid Base.$purple_dark;
+    color: Base.$purple_dark;
+    background-color: transparent;
+  }
+}
+
+.task-reset{
+  position: absolute;
+
+  bottom: 4em;
+  right: 4em;
+
+  color: Base.$purple_dark;
+
+  &:hover{
+    cursor: pointer;
+    opacity: 0.8;
   }
 }

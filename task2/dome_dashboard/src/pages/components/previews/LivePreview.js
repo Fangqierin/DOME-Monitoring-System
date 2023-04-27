@@ -49,7 +49,7 @@ const LivePreview = () => {
                     </>
                     :
                     file_names.map((filename, i) =>
-                        filename && <PreviewImage key={filename} filename={filename}/>
+                        filename && <PreviewImage filename={filename} key={filename}/>
                     )
                 }
             </div>
