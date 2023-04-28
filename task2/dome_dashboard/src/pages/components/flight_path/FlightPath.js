@@ -44,6 +44,7 @@ const FlightPath = () => {
                         z: r.z * 100 - 100,
                     }
                 });
+                console.log(response)
                 set_waypoints(response);
 
                 console.log('Updated way points');
