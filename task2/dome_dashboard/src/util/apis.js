@@ -6,6 +6,7 @@ const apis = {
     get_grids: server_url + 'get_grids',
     get_processed_data: server_url + 'processed_data',
     get_waypoints: server_url + 'waypoint?not_drone=true',
+    get_waypoints_drone: server_url + 'waypoint?manual=true',
     get_task_config: server_url + 'task_config',
     post_task_config: server_url + 'task_config',
 };

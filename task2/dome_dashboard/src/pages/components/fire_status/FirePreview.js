@@ -44,6 +44,7 @@ const FirePreview = () => {
                     response = await response.json();
                     response = response.result;
 
+                    console.log(JSON.stringify(response))
                     set_processed_data(response);
                 }
             } catch (err) {

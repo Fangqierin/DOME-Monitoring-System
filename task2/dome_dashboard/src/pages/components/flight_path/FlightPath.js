@@ -39,12 +39,11 @@ const FlightPath = () => {
                 response = await response.json();
                 response = response.map(r => {
                     return {
-                        x: r.x * 100 - 100,
-                        y: r.y * 100 - 100,
-                        z: r.z * 100 - 100,
+                        x: r.x,
+                        y: r.y,
+                        z: r.z,
                     }
                 });
-                console.log(response)
                 set_waypoints(response);
 
                 console.log('Updated way points');

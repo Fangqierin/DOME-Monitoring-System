@@ -56,8 +56,8 @@ function FireTasks({tasks}) {
             const rectY = (x * cellHeight) + 5;
 
             ctx.fillStyle = task.hasOwnProperty('BM')
-                ? 'blue'
-                : (task.hasOwnProperty('FI') ? 'red' : 'green');
+                ? '#a29bfe'
+                : (task.hasOwnProperty('FI') ? '#81ecec' : '#d63031');
             ctx.fillRect(rectX + 2, rectY + 2, cellWidth - 4, cellHeight - 4);
         }
 
@@ -67,20 +67,17 @@ function FireTasks({tasks}) {
         const legendX = 200;
         const legendY = 5;
 
-        // Blue task
-        ctx.fillStyle = 'blue';
+        ctx.fillStyle = '#a29bfe';
         ctx.fillRect(legendX, legendY, legendWidth, legendHeight);
         ctx.font = '12px sans-serif';
         ctx.fillStyle = 'black';
         ctx.fillText('BM', legendX + legendWidth + 5, legendY + legendHeight);
 
-        // Red task
-        ctx.fillStyle = 'red';
+        ctx.fillStyle = '#81ecec';
         ctx.fillRect(legendX, legendY + legendHeight + 5, legendWidth, legendHeight);
         ctx.fillText('FI', legendX + legendWidth + 5, legendY + legendHeight * 2 + 5);
 
-        // Green task
-        ctx.fillStyle = 'green';
+        ctx.fillStyle = '#d63031';
         ctx.fillRect(legendX, legendY + (legendHeight + 5) * 2, legendWidth, legendHeight);
         ctx.fillText('FT', legendX + legendWidth + 5, legendY + legendHeight * 3 + 10);
     }, [tasks]);

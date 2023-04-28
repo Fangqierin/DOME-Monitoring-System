@@ -36,11 +36,17 @@ const line_chart_reformat_data = (json_data, x_param, y_param_list) => {
         }
 
         for (let id in grouped_data) {
-            datasets.push({
-                label: y_param,
+            const dataset = {
+                label: y_param + (id.includes('2') ? ' (2)' : ' (1)'),
                 data: (grouped_data[id]).map(entry => entry[y_param]),
-                fill: false,
-            })
+                fill: false
+            }
+
+            const color = id.includes('2') ? 'rgb(255, 99, 132)' : 'rgb(54, 162, 235)';
+            dataset.borderColor = color;
+            dataset.backgroundColor = color;
+
+            datasets.push(dataset);
         }
     }
 

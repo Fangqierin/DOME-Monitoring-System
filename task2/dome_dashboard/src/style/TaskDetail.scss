@@ -89,6 +89,12 @@
     border: 1px solid Base.$purple_dark;
     color: Base.$purple_dark;
     background-color: transparent;
+
+    &--manual{
+      display: block;
+      width: 12em;
+      margin-left: 0;
+    }
   }
 }
 

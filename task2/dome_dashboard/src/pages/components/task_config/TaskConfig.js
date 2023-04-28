@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
 import apis from '../../../util/apis';
-import { update_interval, using_fake_data } from '../../../util/config';
+import {update_interval, using_fake_data} from '../../../util/config';
 import fake_data from '../../../util/fake_data';
 import TaskParam from './TaskParam';
 import TaskEnv from './TaskEnv';
@@ -32,17 +32,12 @@ const TaskConfig = () => {
         };
 
         update_task_config().then();
-
-        const intervalId = setInterval(
-            () => {
-                update_task_config().then(() => console.log('Initialized flightpath.'));
-            }, update_interval
-        );
-        return () => clearInterval(intervalId);
     }, [])
 
     const update_config = (config) => {
-        if(using_fake_data){
+        config = JSON.parse(JSON.stringify(config))
+
+        if (using_fake_data) {
             set_task_config({...config});
             return;
         }

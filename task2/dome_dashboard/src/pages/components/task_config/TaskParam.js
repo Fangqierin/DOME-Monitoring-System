@@ -7,10 +7,9 @@ function TaskParam({init_config, update_config}) {
             setConfig({...init_config});
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        [init_config.param]);
-
+        [init_config]);
     const handleInputChange = (event, name, index) => {
-        let value = parseFloat(event.target.value);
+        let value = event.target.value;
         if (isNaN(value)) {
             value = 0;
         }
