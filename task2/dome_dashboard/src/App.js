@@ -16,15 +16,13 @@ import ImageDetail from './pages/ImageDetail';
 const App = () => {
     const [selected, setSelected] = React.useState(0);
 
-
     return (
         <div id='app' className="app">
-            <Navbar selected={selected} setSelected={setSelected}/>
-
-            <div className='nav-space'>
-            </div>
-
             <Router>
+                <Navbar selected={selected} setSelected={setSelected}/>
+                <div className='nav-space'>
+                </div>
+
                 <Routes>
                     <Route path="/" element={
                         selected === 0

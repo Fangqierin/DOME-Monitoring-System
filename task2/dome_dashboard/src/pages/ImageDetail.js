@@ -57,20 +57,32 @@ const ImageDetail = () => {
                 </ul>
                 <div className='image-detail__image-wrapper'>
                     {
-                        selectedImage > 0 && <img className='live-preview__img live-preview__img--smaller' src={ images[selectedImage - 1] } alt='Preview unavailable'/>
+                        selectedImage > 0 &&
+                        <img className='live-preview__img live-preview__img--smaller' src={images[selectedImage - 1]}
+                             alt='Preview unavailable'/>
                     }
                     {
-                        <img className='live-preview__img' src={ images[selectedImage] } alt='Preview unavailable'/>
+                        <img className='live-preview__img' src={images[selectedImage]} alt='Preview unavailable'/>
                     }
                     {
-                        selectedImage < file_names.length - 1 && <img className='live-preview__img live-preview__img--smaller' src={ images[selectedImage + 1] } alt='Preview unavailable'/>
+                        selectedImage < file_names.length - 1 &&
+                        <img className='live-preview__img live-preview__img--smaller' src={images[selectedImage + 1]}
+                             alt='Preview unavailable'/>
                     }
                 </div>
             </div>
         );
     }
 
-    if (!file_names) return null;
+    if (!file_names || file_names.length === 0)
+        return (
+            <div className='image-detail'>
+                <h1 className='home__module__title'>
+                    No images found.
+                </h1>
+            </div>
+        );
+
 
     return (
         <div className='image-detail'>
@@ -87,13 +99,17 @@ const ImageDetail = () => {
             </ul>
             <div className='image-detail__image-wrapper'>
                 {
-                    selectedImage > 0 && <PreviewImage filename={file_names[selectedImage - 1]} key={file_names[selectedImage - 1]} at_edge={true}/>
+                    selectedImage > 0 &&
+                    <PreviewImage filename={file_names[selectedImage - 1]} key={file_names[selectedImage - 1]}
+                                  at_edge={true}/>
                 }
                 {
                     <PreviewImage filename={file_names[selectedImage]} key={file_names[selectedImage]}/>
                 }
                 {
-                    selectedImage < file_names.length - 1 && <PreviewImage filename={file_names[selectedImage + 1]}  key={file_names[selectedImage + 1]} at_edge={true}/>
+                    selectedImage < file_names.length - 1 &&
+                    <PreviewImage filename={file_names[selectedImage + 1]} key={file_names[selectedImage + 1]}
+                                  at_edge={true}/>
                 }
             </div>
         </div>
