@@ -42,7 +42,7 @@ def get_image(filename):
 def get_grids():
     try:
         collection = mongo.db['grids']
-        data = collection.find().sort([('_id', -1)])
+        data = collection.find().sort([('filename', -1)])
         return json_util.dumps({'result': data})
     except Exception as e:
         return jsonify({'error': str(e)})
@@ -54,13 +54,14 @@ def get_waypoints():
         not_drone = request.args.get('not_drone')
         manual = request.args.get('manual')
 
-        collection_grid = mongo.db['grids']
-        fire_data = list(collection_grid.find())
-
         collection_task_config = mongo.db['task_config']
         task_config = collection_task_config.find_one({})
 
-        if not not_drone and (task_config['trigger'] or manual) and fire_data:
+        collection_grid = mongo.db['grids']
+
+        if not not_drone and (task_config['trigger'] or manual):
+            fire_data = list(collection_grid.find())
+
             # Use fire status data to update waypoints
             size = (4, 3)  # Fire Setting Grid Size
             grids = np.full((size[0], size[1]), 0)
@@ -70,6 +71,14 @@ def get_waypoints():
                     col, row = min(math.floor((fire['fx']) / 50), 2), min(math.floor((-fire['fy'] + 200) / 50), 3)
                     grids[row][col] = 1
 
+            missions = task_config['param']
+            plan = task_config['env']['plan_time']
+            wind = task_config['env']['wind_speed']
+            direction = task_config['env']['direction']
+
+            print(grids, missions, plan, wind, direction)
+
+            # TODO: this line should be replaced by a post request
             tasks, estimated_fire_arrival_time, waypoints = (
                 {
                     (3, 2): {'FI': (0, -1)},
@@ -115,28 +124,12 @@ def get_waypoints():
                 "tasks": reformatted_tasks
             })
 
+        if not not_drone:
+            collection_grid.delete_many({})
+
         collection = mongo.db['waypoints']
         documents = list(collection.find())
 
-        if not documents:
-            default_waypoints = [{"_id": {"$oid": "644b4924cbdb2c1461b20073"}, "x": 125, "y": 175, "z": 100},
-                                 {"_id": {"$oid": "644b4924cbdb2c1461b20072"}, "x": 25, "y": 25, "z": 100},
-                                 {"_id": {"$oid": "644b4924cbdb2c1461b20071"}, "x": 25, "y": 175, "z": 100},
-                                 {"_id": {"$oid": "644b4924cbdb2c1461b20070"}, "x": 75, "y": 175, "z": 100},
-                                 {"_id": {"$oid": "644b4924cbdb2c1461b2006f"}, "x": 125, "y": 175, "z": 100},
-                                 {"_id": {"$oid": "644b4924cbdb2c1461b2006e"}, "x": 125, "y": 125, "z": 100},
-                                 {"_id": {"$oid": "644b4924cbdb2c1461b2006d"}, "x": 75, "y": 125, "z": 100},
-                                 {"_id": {"$oid": "644b4924cbdb2c1461b2006c"}, "x": 25, "y": 125, "z": 100},
-                                 {"_id": {"$oid": "644b4924cbdb2c1461b2006b"}, "x": 25, "y": 75, "z": 100},
-                                 {"_id": {"$oid": "644b4924cbdb2c1461b2006a"}, "x": 75, "y": 75, "z": 100},
-                                 {"_id": {"$oid": "644b4924cbdb2c1461b20069"}, "x": 125, "y": 75, "z": 100},
-                                 {"_id": {"$oid": "644b4924cbdb2c1461b20068"}, "x": 125, "y": 25, "z": 100},
-                                 {"_id": {"$oid": "644b4924cbdb2c1461b20067"}, "x": 75, "y": 25, "z": 100},
-                                 {"_id": {"$oid": "644b4924cbdb2c1461b20066"}, "x": 25, "y": 25, "z": 100}]
-            for waypoint in default_waypoints:
-                waypoint.pop('_id')
-                collection.insert_one(waypoint)
-            documents = list(collection.find())
         return json_util.dumps(documents)
 
     except Exception as e:
@@ -161,6 +154,106 @@ def add_waypoint():
 
 @app.route('/processed_data', methods=['GET'])
 def get_processed_data():
+    try:
+        collection = mongo.db['processed_data']
+        data = collection.find_one({})
+
+        return json_util.dumps({'result': data})
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+
+@app.route('/task_config', methods=['GET'])
+def get_task_config():
+    try:
+        collection = mongo.db['task_config']
+        data = collection.find_one({})
+
+        return json_util.dumps({'result': data})
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+
+@app.route('/task_config', methods=['POST'])
+def overwrite_task_config():
+    try:
+        collection = mongo.db['task_config']
+        data = request.get_json()
+        collection.replace_one({}, data)
+        return jsonify({'message': 'Task config updated successfully'})
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+
+# reset images data for dev use only
+@app.route('/replace_data', methods=['GET'])
+def replace_data():
+    try:
+        collection = mongo.db['images']
+        collection.delete_many({})
+
+        newdata = [{"_id": {"$oid": "6403c4484856f667d7a2f7f8"}, "filename": "preview3.jpg",
+                    "filepath": "images\\preview3.jpg"},
+                   {"_id": {"$oid": "6403c4484856f667d7a2f7f7"}, "filename": "preview2.jpg",
+                    "filepath": "images\\preview2.jpg"},
+                   {"_id": {"$oid": "6403c4484856f667d7a2f7f6"}, "filename": "preview1.jpg",
+                    "filepath": "images\\preview1.jpg"},
+                   {"_id": {"$oid": "6403c3a604e5195e39ce7a55"}, "filename": "logo192.jpg",
+                    "filepath": "images\\logo192.jpg"}]
+
+        for data in newdata:
+            data.pop('_id')
+            collection.insert_one(data)
+
+        return jsonify({'message': 'Updated successfully'})
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+
+def init():
+    # empty the images collection
+    try:
+        collection = mongo.db['images']
+        collection.delete_many({})
+    except Exception as e:
+        print(e)
+
+    # initialize the task config
+    try:
+        collection = mongo.db['task_config']
+        data = collection.find_one({})
+        if not data:
+            data = {
+                "param": {
+                    "BM": [
+                        1,
+                        1
+                    ],
+                    "FI": [
+                        0.5,
+                        1
+                    ],
+                    "FT": [
+                        1,
+                        1
+                    ],
+                    "FD": [
+                        0.5,
+                        1
+                    ]
+                },
+                "env": {
+                    "wind_speed": 5,
+                    "plan_time": 60,
+                    "direction": 271
+                },
+                "trigger": True
+            }
+            collection.insert_one(data)
+    except Exception as e:
+        print(e)
+
+    # initialize the processed data:
     try:
         collection = mongo.db['processed_data']
         data = collection.find_one({})
@@ -198,76 +291,34 @@ def get_processed_data():
                 "tasks": reformatted_tasks
             })
             data = collection.find_one({})
-        return json_util.dumps({'result': data})
     except Exception as e:
-        return jsonify({'error': str(e)})
+        print(e)
 
+    # initialize waypoints
+    collection = mongo.db['waypoints']
+    documents = list(collection.find())
 
-@app.route('/task_config', methods=['GET'])
-def get_task_config():
-    try:
-        collection = mongo.db['task_config']
-        data = collection.find_one({})
-        if not data:
-            data = {
-                "param": {
-                    "BM": [
-                        1,
-                        1
-                    ],
-                    "FI": [
-                        0.5,
-                        1
-                    ],
-                    "FT": [
-                        1,
-                        1
-                    ],
-                    "FD": [
-                        0.5,
-                        1
-                    ]
-                },
-                "env": {
-                    "wind_speed": 5,
-                    "plan_time": 60
-                },
-                "trigger": True
-            }
-            collection.insert_one(data)
-
-        return json_util.dumps({'result': data})
-    except Exception as e:
-        return jsonify({'error': str(e)})
-
-
-@app.route('/task_config', methods=['POST'])
-def overwrite_task_config():
-    try:
-        collection = mongo.db['task_config']
-        data = request.get_json()
-        collection.replace_one({}, data)
-        return jsonify({'message': 'Task config updated successfully'})
-    except Exception as e:
-        return jsonify({'error': str(e)})
-
-
-# @app.route('/replace_data', methods=['GET'])
-# def replace_data():
-#     try:
-#         collection = mongo.db['processed_data']
-#         collection.delete_many({})
-#
-#         newdata = [{"_id": {"$oid": "644b58bfe8f215c37a39ae35"}, "grids": [[1, 1, 1], [1, 1, 0], [1, 0, 0], [0, 0, 0]], "estimated_fire_arrival_time": [[0, 6, 9], [0, 6, 6], [0, 6, 6], [3, 3, 6]], "tasks": [{"x": 3, "y": 2, "task": {"FT": [0, -1]}}, {"x": 3, "y": 1, "task": {"FT": [0, -1]}}, {"x": 3, "y": 0, "task": {"FT": [0, -1]}}, {"x": 2, "y": 2, "task": {"FI": [0, -1]}}, {"x": 2, "y": 1, "task": {"FI": [0, -1]}}, {"x": 2, "y": 0, "task": {"FI": [0, -1]}}, {"x": 1, "y": 2, "task": {"FI": [0, -1]}}, {"x": 1, "y": 1, "task": {"FI": [0, -1]}}, {"x": 1, "y": 0, "task": {"FI": [0, -1]}}, {"x": 0, "y": 2, "task": {"FI": [0, -1]}}, {"x": 0, "y": 1, "task": {"FI": [0, -1]}}, {"x": 0, "y": 0, "task": {"FI": [0, -1]}}]}]
-#
-#         for data in newdata:
-#             data.pop('_id')
-#             collection.insert_one(data)
-#
-#         return jsonify({'message': 'Updated successfully'})
-#     except Exception as e:
-#         return jsonify({'error': str(e)})
+    if not documents:
+        default_waypoints = [
+            {"_id": {"$oid": "644b4924cbdb2c1461b20073"}, "x": 125, "y": 175, "z": 100},
+            {"_id": {"$oid": "644b4924cbdb2c1461b20072"}, "x": 25, "y": 25, "z": 100},
+            {"_id": {"$oid": "644b4924cbdb2c1461b20071"}, "x": 25, "y": 175, "z": 100},
+            {"_id": {"$oid": "644b4924cbdb2c1461b20070"}, "x": 75, "y": 175, "z": 100},
+            {"_id": {"$oid": "644b4924cbdb2c1461b2006f"}, "x": 125, "y": 175, "z": 100},
+            {"_id": {"$oid": "644b4924cbdb2c1461b2006e"}, "x": 125, "y": 125, "z": 100},
+            {"_id": {"$oid": "644b4924cbdb2c1461b2006d"}, "x": 75, "y": 125, "z": 100},
+            {"_id": {"$oid": "644b4924cbdb2c1461b2006c"}, "x": 25, "y": 125, "z": 100},
+            {"_id": {"$oid": "644b4924cbdb2c1461b2006b"}, "x": 25, "y": 75, "z": 100},
+            {"_id": {"$oid": "644b4924cbdb2c1461b2006a"}, "x": 75, "y": 75, "z": 100},
+            {"_id": {"$oid": "644b4924cbdb2c1461b20069"}, "x": 125, "y": 75, "z": 100},
+            {"_id": {"$oid": "644b4924cbdb2c1461b20068"}, "x": 125, "y": 25, "z": 100},
+            {"_id": {"$oid": "644b4924cbdb2c1461b20067"}, "x": 75, "y": 25, "z": 100},
+            {"_id": {"$oid": "644b4924cbdb2c1461b20066"}, "x": 25, "y": 25, "z": 100}]
+        for waypoint in default_waypoints:
+            waypoint.pop('_id')
+            collection.insert_one(waypoint)
 
 
 if __name__ == '__main__':
+    init()
     app.run(debug=True, host='0.0.0.0', port=5555)

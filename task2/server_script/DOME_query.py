@@ -22,7 +22,11 @@ Direction=271
 # Convert data to JSON
 data = {
     'Missions': Missions,
-    'Grid_map': Grid_map.tolist(), 'Plan': Plan, 'Wind':Wind,'Direction': Direction}# Convert NumPy array to list for JSON serialization
+    'Grid_map': Grid_map.tolist(),
+    'Plan': Plan,
+    'Wind':Wind,
+    'Direction': Direction
+}
 
 # Send POST request
 url = 'http://192.168.82.130:5000/process_data'
