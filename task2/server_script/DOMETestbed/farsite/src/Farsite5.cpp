@@ -19,7 +19,11 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <sys/sendfile.h>
+//#include <sys/sendfile.h>
+ #include <sys/types.h>
+ #include <sys/socket.h>
+ #include <sys/uio.h>
+
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -39,7 +43,9 @@ void CopyFile(char *in, char *out, bool unused)
     read_fd = open(in, O_RDONLY);
     fstat(read_fd, &stat_buf);
     write_fd = open(out, O_WRONLY | O_CREAT, stat_buf.st_mode);
-    sendfile(write_fd, read_fd, &offset, stat_buf.st_size);
+    //sendfile(write_fd, read_fd, &offset, stat_buf.st_size);
+    read(read_fd, &offset, stat_buf.st_size);
+	write(write_fd, &offset, stat_buf.st_size);
     close(read_fd);
     close(write_fd);
 }
@@ -1622,7 +1628,7 @@ double* Farsite5::AllocPerimeter1(long NumFire, long NumPoints)
 			}
 		}
 		nmemb = (NumPoints) * NUMDATA;			// add 1 to make room for bounding rectangle
-                if (perimeter1[NumFire] && perimeter1[NumFire] > 0)
+                if (perimeter1[NumFire] && *perimeter1[NumFire] > 0)
 			FreePerimeter1(NumFire);
 		perimeter1[NumFire] = new double[nmemb];
 
