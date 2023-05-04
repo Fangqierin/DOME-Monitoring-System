@@ -42,6 +42,16 @@ function TaskEnv({ init_config, update_config }) {
                     onChange={(e) => handleInputChange(e, 'plan_time')}
                 />
             </div>
+            <div>
+                <label className="task-env__label">Direction</label>
+                <input
+                    className="task-env__input"
+                    type="text"
+                    step="0.1"
+                    value={config.env.direction}
+                    onChange={(e) => handleInputChange(e, 'direction')}
+                />
+            </div>
             <button className="task-env__button" onClick={ () => update_config(config) }>
                 Update Values
             </button>

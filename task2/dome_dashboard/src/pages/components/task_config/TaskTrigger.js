@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import apis from '../../../util/apis';
 
-function TaskTrigger({ init_config, update_config }) {
+function TaskTrigger({init_config, update_config}) {
     const [config, setConfig] = useState({...init_config});
 
     useEffect(() => {
@@ -22,11 +22,17 @@ function TaskTrigger({ init_config, update_config }) {
 
     return (
         <div className="task-config__area__module task-trigger">
-            <label className="task-trigger__label">Trigger</label>
-            <button className={`task-trigger__button ${config.trigger ? 'on' : 'off'}`} onClick={ handleToggle }>
+            <label className="task-trigger__label">Auto</label>
+            <button className={`task-trigger__button ${config.trigger ? 'on' : 'off'}`} onClick={handleToggle}>
                 {config.trigger ? 'ON' : 'OFF'}
             </button>
-            <button className='task-trigger__button task-trigger__button--manual' onClick={() => handleTrigger()}>Manual Trigger</button>
+            {
+                config.trigger ||
+                <button className='task-trigger__button task-trigger__button--manual'
+                        onClick={() => handleTrigger()}>
+                    Manual Trigger
+                </button>
+            }
         </div>
     );
 }

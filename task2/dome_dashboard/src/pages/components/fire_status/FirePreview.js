@@ -44,7 +44,6 @@ const FirePreview = () => {
                     response = await response.json();
                     response = response.result;
 
-                    console.log(JSON.stringify(response))
                     set_processed_data(response);
                 }
             } catch (err) {
@@ -72,8 +71,8 @@ const FirePreview = () => {
                     processed_data && (
                         <>
                             <FireGrids grids={processed_data.grids}/>
-                            <FireTasks tasks={processed_data.tasks}/>
                             <FireEAT grids={processed_data.estimated_fire_arrival_time}/>
+                            <FireTasks tasks={processed_data.tasks}/>
                         </>
                     )
                 }

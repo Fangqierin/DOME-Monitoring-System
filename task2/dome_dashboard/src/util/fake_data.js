@@ -311,7 +311,8 @@ const fake_data = {
             "rain_total": 0,
             "id": "weather2"
         }],
-        waypoints: [{"x": 125, "y": 175, "z": 100},
+        waypoints: [
+            {"x": 125, "y": 175, "z": 100},
             {"x": 25, "y": 25, "z": 100},
             {"x": 25, "y": 175, "z": 100},
             {"x": 75, "y": 175, "z": 100},
@@ -483,7 +484,8 @@ const fake_data = {
                 },
                 "env": {
                     "wind_speed": 5,
-                    "plan_time": 60
+                    "plan_time": 60,
+                    "direction": 271
                 },
                 "trigger": true
             }
