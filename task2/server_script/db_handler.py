@@ -2,6 +2,8 @@ import json
 import os
 import sys
 import math
+import requests
+import ast
 
 import numpy as np
 from flask import Flask, send_file, request, jsonify
@@ -75,10 +77,52 @@ def get_waypoints():
             plan = task_config['env']['plan_time']
             wind = task_config['env']['wind_speed']
             direction = task_config['env']['direction']
+            data = {
+                'Missions': missions,
+                'Grid_map': grids.tolist(),
+                'Plan': plan,
+                'Wind':wind,
+                'Direction': direction
+            }
 
-            print(grids, missions, plan, wind, direction)
+            # Send POST request
+            url = 'http://192.168.82.139:5000/process_data'
+            response = requests.post(url, json=data)
+            # Check response status code
+            if response.status_code == 200:
+                answer=json.loads(response.text)
+                estimated_fire_arrival_time = answer['EFA']
+                waypoints=answer['WPS']
+                tasks=answer['Task']
+                
+                collection_waypoints = mongo.db['waypoints']
+                collection_waypoints.delete_many({})
+                for waypoint in waypoints:
+                    collection_waypoints.insert_one({
+                        "x": waypoint[0] * 50,
+                        "y": waypoint[1] * 50,
+                        "z": waypoint[2] * 50
+                    })
 
-            # TODO: this line should be replaced by a post request
+                reformatted_tasks = []
+                for key, value in tasks.items():
+                    x, y = ast.literal_eval(key)
+                    reformatted_tasks.append(
+                        {"x": x, "y": y, "task": value}
+                    )
+
+                collection_processed_data = mongo.db['processed_data']
+                collection_processed_data.delete_many({})
+                collection_processed_data.insert_one({
+                    "grids": grids.tolist(),
+                    "estimated_fire_arrival_time": estimated_fire_arrival_time,
+                    "tasks": reformatted_tasks
+                })
+            else:
+                print('POST request failed with status code', response.status_code)
+
+            # TODO: this line should be replaced by a post request when the remote server is on
+            '''
             tasks, estimated_fire_arrival_time, waypoints = (
                 {
                     (3, 2): {'FI': (0, -1)},
@@ -99,30 +143,7 @@ def get_waypoints():
                  [75, 125, 100], [25, 125, 100], [25, 75, 100], [75, 75, 100], [125, 75, 100], [125, 25, 100],
                  [75, 25, 100], [25, 25, 100]]
             )
-
-            collection_waypoints = mongo.db['waypoints']
-            collection_waypoints.delete_many({})
-            for waypoint in waypoints:
-                collection_waypoints.insert_one({
-                    "x": waypoint[0],
-                    "y": waypoint[1],
-                    "z": waypoint[2]
-                })
-
-            reformatted_tasks = []
-            for key, value in tasks.items():
-                x, y = key
-                reformatted_tasks.append(
-                    {"x": x, "y": y, "task": value}
-                )
-
-            collection_processed_data = mongo.db['processed_data']
-            collection_processed_data.delete_many({})
-            collection_processed_data.insert_one({
-                "grids": grids.tolist(),
-                "estimated_fire_arrival_time": estimated_fire_arrival_time,
-                "tasks": reformatted_tasks
-            })
+            '''
 
         if not not_drone:
             collection_grid.delete_many({})
@@ -244,7 +265,7 @@ def init():
                 },
                 "env": {
                     "wind_speed": 5,
-                    "plan_time": 60,
+                    "plan_time": 1,
                     "direction": 271
                 },
                 "trigger": True
@@ -256,41 +277,40 @@ def init():
     # initialize the processed data:
     try:
         collection = mongo.db['processed_data']
-        data = collection.find_one({})
-        if not data:
-            tasks, estimated_fire_arrival_time = (
-                {
-                    (3, 2): {'FI': (0, -1)},
-                    (3, 1): {'FI': (0, -1)},
-                    (3, 0): {'FI': (0, -1)},
-                    (2, 2): {'FI': (0, -1)},
-                    (2, 1): {'FI': (0, -1)},
-                    (2, 0): {'FI': (0, -1)},
-                    (1, 2): {'FI': (0, -1)},
-                    (1, 1): {'FI': (0, -1)},
-                    (1, 0): {'FI': (0, -1)},
-                    (0, 2): {'FI': (0, -1)},
-                    (0, 1): {'FI': (0, -1)},
-                    (0, 0): {'FI': (0, -1)}
-                },
-                [[100] * 3 for i in range(4)]
+        data = collection.delete_one({})
+        tasks, estimated_fire_arrival_time = (
+            {
+                (3, 2): {'FI': (0, -1)},
+                (3, 1): {'FI': (0, -1)},
+                (3, 0): {'FI': (0, -1)},
+                (2, 2): {'FI': (0, -1)},
+                (2, 1): {'FI': (0, -1)},
+                (2, 0): {'FI': (0, -1)},
+                (1, 2): {'FI': (0, -1)},
+                (1, 1): {'FI': (0, -1)},
+                (1, 0): {'FI': (0, -1)},
+                (0, 2): {'FI': (0, -1)},
+                (0, 1): {'FI': (0, -1)},
+                (0, 0): {'FI': (0, -1)}
+            },
+            [[100] * 3 for i in range(4)]
+        )
+
+        reformatted_tasks = []
+        for key, value in tasks.items():
+            x, y = key
+            reformatted_tasks.append(
+                {"x": x, "y": y, "task": value}
             )
 
-            reformatted_tasks = []
-            for key, value in tasks.items():
-                x, y = key
-                reformatted_tasks.append(
-                    {"x": x, "y": y, "task": value}
-                )
-
-            collection_processed_data = mongo.db['processed_data']
-            collection_processed_data.delete_many({})
-            collection_processed_data.insert_one({
-                "grids": [[0] * 3 for i in range(4)],
-                "estimated_fire_arrival_time": estimated_fire_arrival_time,
-                "tasks": reformatted_tasks
-            })
-            data = collection.find_one({})
+        collection_processed_data = mongo.db['processed_data']
+        collection_processed_data.delete_many({})
+        collection_processed_data.insert_one({
+            "grids": [[0] * 3 for i in range(4)],
+            "estimated_fire_arrival_time": estimated_fire_arrival_time,
+            "tasks": reformatted_tasks
+        })
+        data = collection.find_one({})
     except Exception as e:
         print(e)
 
@@ -317,6 +337,15 @@ def init():
         for waypoint in default_waypoints:
             waypoint.pop('_id')
             collection.insert_one(waypoint)
+            
+    
+    # empty sensor data
+    collection = mongo.db['air']
+    collection.delete_many({})
+    
+        
+    collection = mongo.db['weather']
+    collection.delete_many({})
 
 
 if __name__ == '__main__':
