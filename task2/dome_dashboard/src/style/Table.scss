@@ -1,7 +1,10 @@
 .table{
+  display: block;
+
   border-collapse: collapse;
+  height: calc(100vh - 5em);
   width: 100%;
-  max-width: 800px; /* Set a max width for the table */
+  overflow-y: auto;
   /* Center the table on the page */
   margin: 1em auto 0;
 

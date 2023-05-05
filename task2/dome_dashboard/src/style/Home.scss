@@ -1,17 +1,22 @@
 @use 'Base';
 
 .home{
-  &-title{
-    margin: 0.6em 1rem;
-
-    font-size: 2.8em;
-    font-family: Base.$font-title;
-  }
+  height: calc(100vh - 5em);
+  overflow-y: auto;
 
   &-subtitle{
     margin: 0.6em 1rem;
 
     font-size: 1.4em;
     font-family: Base.$font-subtitle;
+  }
+
+  &__module__title{
+    box-sizing: border-box;
+    align-self: start;
+    padding: 0.2em;
+    border-radius: 4px;
+    font-size: 1.4em;
+    margin: 0.4em;
   }
 }

@@ -68,4 +68,4 @@ const ChartArea = () =>{
     )
 }
 
-export default ChartArea;
+export default React.memo(ChartArea);

@@ -1,16 +1,17 @@
 import React, {useEffect} from 'react';
 
-import { update_interval, using_fake_data } from '../../../util/config';
+import {update_interval, using_fake_data} from '../../../util/config';
 import fake_data from '../../../util/fake_data';
 import apis from '../../../util/apis';
 
 import WayPointGraph from './WayPointGraph';
 
 const FlightPath = () => {
-    const [way_points, set_way_points] = React.useState(undefined);
+    const [flightpath, set_flightpath] = React.useState(undefined);
+    const [waypoints, set_waypoints] = React.useState(undefined);
 
     useEffect(() => {
-        const update_way_points = async () => {
+        const update_flightpath = async () => {
             try {
                 let response;
                 if (using_fake_data) {
@@ -19,9 +20,8 @@ const FlightPath = () => {
                     response = await fetch(apis.get_grids);
                     response = await response.json();
                     response = response.result.map(entry => JSON.parse(entry.data).location);
-                    console.log(response)
                 }
-                set_way_points(response);
+                set_flightpath(response);
 
                 console.log('Updated way points');
             } catch (err) {
@@ -29,21 +29,49 @@ const FlightPath = () => {
             }
         };
 
-        update_way_points().then(() => console.log('Initialized way points.'));
+        const update_waypoints = async () => {
+            try {
+                if (using_fake_data) {
+                    set_waypoints(fake_data.waypoints);
+                    return;
+                }
+                let response = await fetch(apis.get_waypoints);
+                response = await response.json();
+                response = response.map(r => {
+                    return {
+                        x: r.x,
+                        y: r.y,
+                        z: r.z,
+                    }
+                });
+                set_waypoints(response);
 
-        const intervalId = setInterval(update_way_points, update_interval);
+                console.log('Updated way points');
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        update_flightpath().then(() => console.log('Initialized flightpath.'));
+        update_waypoints().then(() => console.log('Initialized waypoints.'));
+
+        const intervalId = setInterval(
+            () => {
+                update_flightpath().then(() => console.log('Initialized flightpath.'));
+                update_waypoints().then(() => console.log('Initialized waypoints.'));
+            }, update_interval
+        );
         return () => clearInterval(intervalId);
     }, []);
 
-    if(!way_points) return (<></>);
-
     return <>
         <h2 className="home-subtitle">Flight Path</h2>
-        <div className='chart-area' onDoubleClick={() => window.open('/chart/waypoints', '_blank')}>
-            <WayPointGraph way_points={way_points}/>
+        <div className='chart-area'>
+            {flightpath && <WayPointGraph way_points={flightpath} title='Flight Path'/>}
+            {waypoints && <WayPointGraph way_points={waypoints} title='Waypoints'/>}
         </div>
 
     </>
 }
 
-export default FlightPath;
+export default React.memo(FlightPath);

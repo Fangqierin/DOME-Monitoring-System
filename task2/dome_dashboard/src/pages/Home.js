@@ -1,6 +1,6 @@
 import React from "react";
 
-import FireGrids from './components/grids/FireGrids';
+import FirePreview from './components/fire_status/FirePreview';
 import LivePreview from './components/previews/LivePreview';
 import ChartArea from './components/charts/ChartArea';
 
@@ -13,14 +13,9 @@ import FlightPath from './components/flight_path/FlightPath';
 const Home = () => {
     return (
         <div className='home'>
-            <h1 className='home-title'>DOME Dashboard</h1>
-
-            { 
-                <LivePreview/> 
-            }
-            <FireGrids/>
+            <LivePreview/>
+            <FirePreview/>
             <FlightPath/>
-
             <ChartArea/>
         </div>
     );

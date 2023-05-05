@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Plotly from 'react-plotly.js';
 
-const WayPointGraph = ({way_points}) => {
+const WayPointGraph = ({way_points, title}) => {
     const[params, setParams] = useState({
         data: [],
         layout: {}
@@ -22,7 +22,7 @@ const WayPointGraph = ({way_points}) => {
             y: y,
             z: z,
             marker: {
-                color: [...Array(lastPointIndex).fill('#74b9ff'), '#55efc4'],
+                color: ['#55efc4', ...Array(lastPointIndex - 1).fill('#74b9ff'), '#55efc4'],
                 size: 10,
                 symbol: 'circle'
             }
@@ -32,16 +32,24 @@ const WayPointGraph = ({way_points}) => {
             height: 640,
             // title: 'Flight Path',
             scene: {
-                xaxis: { range: [-100, 100] },
-                yaxis: { range: [-100, 100] },
-                zaxis: { range: [-100, 120] }
+                xaxis: { range: [0, 200] },
+                yaxis: { range: [0, 200] },
+                zaxis: { range: [0, 200] }
+            },
+            title: {
+                text: title,
+                font: {
+                    size: 20
+                },
+                yref: 'paper',
+                automargin: true,
             }
         };
         const data = [trace];
         setParams({ data, layout });
 
         console.log('Generated way point graph');
-    }, [way_points]);
+    }, [title, way_points]);
 
     return (
         <div>
@@ -54,4 +62,4 @@ const WayPointGraph = ({way_points}) => {
     );
 }
 
-export default WayPointGraph;
+export default React.memo(WayPointGraph);
