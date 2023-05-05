@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
 import apis from '../../../util/apis';
-import {update_interval, using_fake_data} from '../../../util/config';
+import {using_fake_data} from '../../../util/config';
 import fake_data from '../../../util/fake_data';
 import TaskParam from './TaskParam';
 import TaskEnv from './TaskEnv';
