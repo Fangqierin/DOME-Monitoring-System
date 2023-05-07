@@ -56,7 +56,7 @@ function FireEAT({grids}) {
                 const cell = row[j];
                 const rectX = (j * cellWidth) + 5;
                 const rectY = (i * cellHeight) + 5;
-                ctx.fillStyle = `rgba(255, 0, 0, ${cell < 20 ? (20 - cell) / 20 : 0})`;
+                ctx.fillStyle = `rgba(255, 0, 0, ${cell < 5 ? (5 - cell) / 5 : 0})`;
                 ctx.fillRect(rectX + 2, rectY + 2, cellWidth - 4, cellHeight - 4);
             }
         }
@@ -69,12 +69,12 @@ function FireEAT({grids}) {
         }
         ctx.fillStyle = 'black';
         ctx.fillText('0s', 220, 20);
-        ctx.fillText('20s', 220, 210);
+        ctx.fillText('5s', 220, 210);
     }, [grids]);
 
     return (
         <div className="grid-area__graph">
-            <div className="home__module__title">Estimated time</div>
+            <div className="home__module__title">Fire Arrival Time</div>
             <canvas ref={canvasRef} width={240} height={240}/>
         </div>
     );

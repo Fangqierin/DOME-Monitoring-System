@@ -70,11 +70,11 @@ class Tello_drone:
         # includes the start as the first waypoint
         self.total_waypoints = 0
         self.waypoints = []
-        self.base_waypoint = {'x': '0', 'y': '0', 'z': '100'}
+        self.base_waypoint = {'x': '25', 'y': '25', 'z': '100'}
 
         # the current waypoint the drone is on
-        self.prev_waypoint = {'x': '0', 'y': '0', 'z': '100'}
-        self.current_waypoint = {'x': '0', 'y': '0', 'z': '100'}
+        self.prev_waypoint = {'x': '25', 'y': '25', 'z': '100'}
+        self.current_waypoint = {'x': '25', 'y': '25', 'z': '100'}
 
         self.x = int(self.current_waypoint["x"])
         self.y = int(self.current_waypoint["y"])
@@ -161,6 +161,8 @@ class Tello_drone:
         url = "http://localhost:5555/waypoint"
         response = requests.get(url)
         new_waypoints = response.json()
+        print("*" * 100)
+        print(new_waypoints)
         if len(new_waypoints) > 0:
             for w in new_waypoints:
                 self.waypoints = new_waypoints
@@ -276,7 +278,7 @@ class Tello_drone:
 
     def move_direct(self):
 
-        l_r_distance = int(self.current_waypoint["x"]) - int(self.prev_waypoint["x"]) 
+        l_r_distance = int(self.current_waypoint["x"]) - int(self.prev_waypoint["x"])
         b_f_distance = int(self.current_waypoint["y"]) - int(self.prev_waypoint["y"])
         u_d_distance = int(self.current_waypoint["z"]) - int(self.prev_waypoint["z"])
 
@@ -359,6 +361,8 @@ class Tello_drone:
         makes the drone hover in place
         '''
         self.drone.send_rc_control(0,0,0,0)
+        time.sleep(1)
+        print(f"sleep 1")
     
     # Streaming and Image Processing Functions
     def stream_current_frame(self):

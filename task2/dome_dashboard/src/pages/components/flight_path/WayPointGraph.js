@@ -22,7 +22,7 @@ const WayPointGraph = ({way_points, title}) => {
             y: y,
             z: z,
             marker: {
-                color: ['#55efc4', ...Array(lastPointIndex - 1).fill('#74b9ff'), '#55efc4'],
+                color: ['#55efc4', ...Array(lastPointIndex < 1 ? 0 : lastPointIndex - 1).fill('#74b9ff'), '#55efc4'],
                 size: 10,
                 symbol: 'circle'
             }

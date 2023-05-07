@@ -35,7 +35,6 @@ if __name__ == "__main__":
 
         main_drone = Tello_drone(25, 25, 90)
         main_drone.takeoff()
-        main_drone.add_waypoints_database()
 
 
         # while running:
@@ -48,11 +47,12 @@ if __name__ == "__main__":
         #         #main_drone.waypointsCollection.update_one({"_id":main_drone.current_waypoint["_id"]},{"$set":{"read":"1"}})
         #     else:
         #         main_drone.add_waypoints_database()
+        print(f"waypoint {main_drone.waypoints[1:]}")
+        for _ in range(int(sys.argv[1])): #number of rounds
+            main_drone.add_waypoints_database()
 
-        for _ in range(sys.argv[1]): #number of rounds
-            for w in main_drone.waypoints:
+            for w in main_drone.waypoints[1:]:
                 #w = main_drone.waypoints[i]
-                print(w)
                 main_drone.prev_waypoint = main_drone.current_waypoint
                 main_drone.current_waypoint = w
                 #main_drone.move()
@@ -65,7 +65,6 @@ if __name__ == "__main__":
             main_drone.move_direct()
             time.sleep(5)
 
-            main_drone.add_waypoints_database()
             # for i in range(w_i+1, main_drone.total_waypoints):
             #     w = main_drone.waypoints[i]
             #     print(w)
