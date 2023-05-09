@@ -1,10 +1,9 @@
 # DOME: IoT-Based Monitoring of Emergent Events For Wildland Fire Resilience
 
 ### Description
+<!-- UCI 2023 Spring CS 295P Keystone project - DOME
 
-UCI 2023 Spring CS 295P Keystone project - DOME
-
-[Learn more about the project](https://trello.com/b/OMCMnthy/project)
+[Learn more about the project](https://trello.com/b/OMCMnthy/project) -->
 
 The project contains three tasks.
 
