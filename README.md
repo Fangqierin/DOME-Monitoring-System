@@ -1,6 +1,4 @@
-# DOME:IoT-Based Monitoring of Emergent Events For Wildland Fire Resilience
-![Uploading image.png…]()
--An-end-to-end-drone-based-platform-for-monitoring-emerging-events
+# DOME: IoT-Based Monitoring of Emergent Events For Wildland Fire Resilience
 
 ### Description
 
