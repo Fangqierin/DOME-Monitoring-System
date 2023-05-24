@@ -4,8 +4,6 @@
 
 This folder contains the code running on the testing raspberry pi. The file location maybe different on other machines.
 
-Find details task descriptions [here](https://trello.com/c/9CVeJohe/18-task2-week4).
-
 **client_script**
 
 > The scripts in this folder run automatically when the machine is turned on.
