@@ -4,15 +4,20 @@
 
 UCI 2023 Spring CS 295P Keystone project - DOME
 
-[Learn more about the project](https://trello.com/b/OMCMnthy/project)
+Project Description: 
 
-The project contains three tasks.
+Structure: 
 
-1. **Integrate in-situ sensors (wind and air quality sensors) with drone-based sensing in the DOME system.**
+Poster: 
 
-2. **Explore store-and-upload data transmission.**
+How to run: 
+1) Dashboard 
+2) Server 
+3) Sensor 
+4) Drone 
 
-3. **Explore event-driven flight planning of drones**
+Video: 
+
 
 Find code and usages in subdirectories.
 
