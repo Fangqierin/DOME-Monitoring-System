@@ -88,7 +88,7 @@ def get_waypoints():
             }
 
             # Send POST request
-            url = 'http://192.168.82.131:5000/process_data'
+            url = 'http://192.168.82.134:5000/process_data'
             response = requests.post(url, json=data)
             # Check response status code
             if response.status_code == 200:
