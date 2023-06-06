@@ -19,11 +19,9 @@ An IoT system for fire monitoring and disaster response. Uses drones, IoT device
 
 ![](Resources/Structure.png)
 
-<br/>
-
 ### [Poster](Resources/Poster.pdf)
 
-<br/>
+### [Demo](https://www.youtube.com/watch?v=NQfSgAU3RjU)
 
 ### Usage
 
@@ -54,10 +52,6 @@ Must be in Linux Env
 ##### Sensor
 
 ##### Drone
-
-### Video
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/NQfSgAU3RjU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ### Common problems
 
