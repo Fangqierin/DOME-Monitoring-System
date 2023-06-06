@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bruno+Ace+SC&family=Cinzel&family=Dancing+Script:wght@700&family=Lobster&display=swap');
+
+$font-title: 'Bruno Ace SC', cursive;
+$font-subtitle: 'Cinzel', serif;
+
+$background-light: white;
+$background-dark: #353b48;
+$text-light: aliceblue;
+$text-focus: #81ecec;
+
+$cell_on_fire: #ff3838;
+$cell_off_fire: aliceblue;
+
+$purple_light: #8866E9;
+$purple_dark: #5E38CC;
+
+
+@mixin flex_div($dir: row, $wrap: wrap) {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: $dir;
+  flex-wrap: $wrap;
+
+  align-items: center;
+  justify-content: center;
+}
+
