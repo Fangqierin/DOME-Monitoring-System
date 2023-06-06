@@ -9,7 +9,6 @@ import {
     Legend,
     Colors,
 } from 'chart.js';
-import {group} from 'plotly.js/src/plots/frame_attributes';
 
 ChartJS.register(
     CategoryScale,

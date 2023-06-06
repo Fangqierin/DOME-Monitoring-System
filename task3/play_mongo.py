@@ -1,5 +1,3 @@
-# USED TO INITIALISE THE MONGODB
-
 # from os import remove
 from glob import glob
 from pymongo import MongoClient
@@ -27,20 +25,49 @@ def add_waypoints_database(currRound):
 
 
 def insert_mongo(col):
-	col.insert_many([{"read": "0","x": "0", "y": "-25", "z": "110" },
-                                    {"read": "0", "x": "50", "y": "-25", "z": "110" },
-                                    {"read": "0", "x": "50", "y": "25", "z": "110" },
-                                    {"read": "0", "x": "-50", "y": "25", "z": "110"},
-                                  ])
+	# col.insert_many([{"order": "0","x": "25", "y": "25", "z": "100" },
+ #                    {"order": "1", "x": "75", "y": "25", "z": "100" },
+ #                    {"order": "2", "x": "125", "y": "25", "z": "100" },
+ #                    {"order": "3", "x": "125", "y": "75", "z": "100" },
+ #                    {"order": "4", "x": "75", "y": "75", "z": "100" },
+ #                    {"order": "5", "x": "25", "y": "75", "z": "100" },
+ #                    {"order": "6", "x": "25", "y": "125", "z": "100" },
+ #                    {"order": "7", "x": "75", "y": "125", "z": "100" },
+ #                    {"order": "8", "x": "125", "y": "125", "z": "100" },
+ #                    {"order": "9", "x": "125", "y": "175", "z": "100" },
+ #                    {"order": "10", "x": "75", "y": "175", "z": "100" },
+ #                    {"order": "11", "x": "25", "y": "175", "z": "100" },
+ #                    {"order": "12", "x": "25", "y": "25", "z": "100" },
+ #                    {"order": "13", "x": "125", "y": "175", "z": "100" }
+ #                    ])
+	col.insert_many([{"x": "25", "y": "25", "z": "100" },
+                    { "x": "75", "y": "25", "z": "100" },
+                    { "x": "125", "y": "25", "z": "100" },
+                    { "x": "125", "y": "75", "z": "100" },
+                    { "x": "75", "y": "75", "z": "100" },
+                    { "x": "25", "y": "75", "z": "100" },
+                    { "x": "25", "y": "125", "z": "100" },
+                    { "x": "75", "y": "125", "z": "100" },
+                    { "x": "125", "y": "125", "z": "100" },
+                    { "x": "125", "y": "175", "z": "100" },
+                    { "x": "75", "y": "175", "z": "100" },
+                    { "x": "25", "y": "175", "z": "100" },
+                    { "x": "25", "y": "25", "z": "100" },
+                    { "x": "125", "y": "175", "z": "100" }
+                    ])
+    # col.insert_many([{"order": "0","x": "100", "y": "100", "z": "100" },
+    #                 {"order": "1", "x": "0", "y": "100", "z": "100" },
+    #                 {"order": "2", "x": "100", "y": "0", "z": "100" },
+    #                 ])        
 
 
 client = MongoClient("mongodb://127.0.0.1:27017/")
 
 
 # Create database called waypoints
-waypointsdb = client["waypoints_new"]
+waypointsdb = client["dome"]
 # Create Collection (table) called currentWaypoints
-waypointsCollection = waypointsdb.currentWaypoints
+waypointsCollection = waypointsdb.waypoint
 
 imagedb = client["images"]
 imageCollection = imagedb.currentImages

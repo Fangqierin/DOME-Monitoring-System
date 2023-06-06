@@ -71,7 +71,9 @@ def get_waypoints():
             for f in fire_data:
                 for fire in json.loads(f['data'])['fires']:
                     col, row = min(math.floor((fire['fx']) / 50), 2), min(math.floor((-fire['fy'] + 200) / 50), 3)
+                    col, row = max(col,  0), max(row, 0)
                     grids[row][col] = 1
+
 
             missions = task_config['param']
             plan = task_config['env']['plan_time']
@@ -86,7 +88,7 @@ def get_waypoints():
             }
 
             # Send POST request
-            url = 'http://192.168.82.139:5000/process_data'
+            url = 'http://192.168.82.166:5000/process_data'
             response = requests.post(url, json=data)
             # Check response status code
             if response.status_code == 200:
@@ -103,12 +105,13 @@ def get_waypoints():
                         "y": waypoint[1] * 50,
                         "z": waypoint[2] * 50
                     })
-
+                
                 reformatted_tasks = []
                 for key, value in tasks.items():
+                    value = ast.literal_eval(value)
                     x, y = ast.literal_eval(key)
                     reformatted_tasks.append(
-                        {"x": x, "y": y, "task": value}
+                        {"x": y, "y": 2 - x, "task": value}
                     )
 
                 collection_processed_data = mongo.db['processed_data']
@@ -118,6 +121,8 @@ def get_waypoints():
                     "estimated_fire_arrival_time": estimated_fire_arrival_time,
                     "tasks": reformatted_tasks
                 })
+                
+                
             else:
                 print('POST request failed with status code', response.status_code)
 
@@ -144,8 +149,6 @@ def get_waypoints():
                  [75, 25, 100], [25, 25, 100]]
             )
             '''
-
-        if not not_drone:
             collection_grid.delete_many({})
 
         collection = mongo.db['waypoints']

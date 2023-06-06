@@ -57,7 +57,9 @@ function FireTasks({tasks}) {
 
             ctx.fillStyle = task.hasOwnProperty('BM')
                 ? 'blue'
-                : (task.hasOwnProperty('FI') ? 'red' : 'green');
+                : (task.hasOwnProperty('FI')
+                    ? 'red'
+                    : (task.hasOwnProperty('FT') ? 'orange' : 'green'));
             ctx.fillRect(rectX + 2, rectY + 2, cellWidth - 4, cellHeight - 4);
         }
 
@@ -77,9 +79,13 @@ function FireTasks({tasks}) {
         ctx.fillRect(legendX, legendY + legendHeight + 5, legendWidth, legendHeight);
         ctx.fillText('FI', legendX + legendWidth + 5, legendY + legendHeight * 2 + 5);
 
-        ctx.fillStyle = 'green';
+        ctx.fillStyle = 'orange';
         ctx.fillRect(legendX, legendY + (legendHeight + 5) * 2, legendWidth, legendHeight);
         ctx.fillText('FT', legendX + legendWidth + 5, legendY + legendHeight * 3 + 10);
+
+        ctx.fillStyle = 'green';
+        ctx.fillRect(legendX, legendY + (legendHeight + 5) * 3, legendWidth, legendHeight);
+        ctx.fillText('FD', legendX + legendWidth + 5, legendY + legendHeight * 4 + 15);
     }, [tasks]);
 
     return (

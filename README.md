@@ -1,4 +1,4 @@
-# DOME-An-end-to-end-drone-based-platform-for-monitoring-emerging-events
+# DOME: IoT-Based Monitoring of Emergent Events For Wildland Fire Resilience
 
 <br/>
 
@@ -6,7 +6,14 @@
 
 An IoT system for fire monitoring and disaster response. Uses drones, IoT devices, and data analysis to enhance wildfire management. Provides timely information, predicts fire behavior, and optimizes resource allocation for accurate and efficient response. Empowers emergency respondents to make informed decisions and minimize wildfire impact.
 
+<!-- UCI 2023 Spring CS 295P Keystone project - DOME
+
+<<<<<<< HEAD
+An IoT system for fire monitoring and disaster response. Uses drones, IoT devices, and data analysis to enhance wildfire management. Provides timely information, predicts fire behavior, and optimizes resource allocation for accurate and efficient response. Empowers emergency respondents to make informed decisions and minimize wildfire impact.
+
 <br/>
+=======
+[Learn more about the project](https://trello.com/b/OMCMnthy/project) -->
 
 ### Structure
 
@@ -51,8 +58,6 @@ Must be in Linux Env
 ### Video
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/NQfSgAU3RjU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-
 
 ### Common problems
 
