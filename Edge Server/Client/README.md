@@ -1,0 +1,1 @@
+Use `upload_startup.py` to check network condition, scan files in a folder, and upload them using ZeroMQ.
